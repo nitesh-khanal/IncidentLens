@@ -64,3 +64,26 @@ used — issue_type is the label already present in the source data.
 - Balanced classes on this synthetic dataset should not be read as
   evidence that a real-world incident dataset would also be balanced —
   this is a property of how the dataset was generated.
+
+## Critical finding during training (Stage 16)
+
+All three models achieved 100.00% accuracy on both train and test sets.
+Diagnosed, not accepted at face value: the primary dataset contains only
+**96 unique `processed_message` text values across all 100,000 rows**, and
+every one of those 96 texts maps to exactly one `issue_type` with zero
+exceptions. This means TF-IDF features alone form a perfect lookup table —
+the models are memorizing a 96-entry mapping, not learning to generalize
+from incident language. Metadata features (product_area, priority, sla_plan,
+channel, platform, region, customer_segment) were checked and ruled out as
+the leak source (max purity ~13%, consistent with random chance across 8
+balanced classes).
+
+### Implication
+100% accuracy on this dataset is a property of its synthetic template
+generation, not evidence the underlying approach would work on real,
+non-templated incident text. Stage 17 will report this finding prominently
+rather than presenting 100% as a genuine result, and will run an additional
+"template holdout" test — training and testing on disjoint sets of the 96
+templates — to measure whether the model can classify a genuinely unseen
+phrasing, which is a fairer, more honest test of generalization than the
+standard row-level train/test split on this particular dataset.
