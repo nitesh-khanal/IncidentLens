@@ -53,3 +53,42 @@
 ## Attribution statement (for README/report use)
 
 > Contains data from "IT Support Tickets" by ahsanneural, sourced from Kaggle (https://www.kaggle.com/datasets/ahsanneural/synthetic-it-support-tickets), licensed under CC BY 4.0. No modifications have been made to the raw data; derived/processed versions are noted where applicable.
+
+---
+
+# Dataset: Incident Management Process Event Log (Secondary)
+
+## Source
+- Kaggle: https://www.kaggle.com/datasets/albertopmd/process-mining-event-log-incident-management
+- File: `Incident_Management_CSV.csv` (semicolon-delimited)
+- Downloaded via Kaggle CLI on 2026-09-26
+
+## License & Attribution
+- License: **MIT**
+
+## Real statistics (measured)
+- **Events (rows):** 242,901
+- **Unique incidents (Case ID):** 31,588 — this confirms the originally-referenced
+  "31K+ incidents" figure; earlier attempts to verify this via web search found
+  a different, smaller UCI snapshot (24,918 incidents / 141,712 events) of what
+  appears to be the same underlying dataset family — this Kaggle mirror is a
+  larger/different version, stated here rather than assumed identical.
+- **Distinct event types:** 18 (ticket lifecycle: created → assigned → WIP →
+  escalated (L1→L2→L3) → solved/closed/reopened/rejected)
+- **Events per case:** mean 7.69, min 4, max 15
+- **Date range:** 2023-01-01 to 2024-01-02 (full year)
+- **Missing data:** `Resolver` missing on 96,496 rows (expected — early lifecycle
+  events like "Ticket created" have no resolver assigned yet)
+
+## Columns
+Case ID, Variant, Priority (Low/Medium/High), Reporter, Timestamp, Event,
+Issue Type (Performance Issue, Bug, Feature Request, Incident, Service Request,
+Maintenance, Technical Issue — a different taxonomy from the primary dataset's
+issue_type), Resolver, Report Channel, Short Description, Customer Satisfaction.
+
+## Relationship to the primary dataset
+No shared identifiers exist between this dataset and the primary 100K ticket
+dataset — they are separate synthetic sources. This dataset is used standalone
+for **process/workflow analytics** (Stage 13) — escalation patterns, time spent
+per stage, reassignment behavior — not merged with or joined to the primary
+dataset's NLP/similarity pipeline.
