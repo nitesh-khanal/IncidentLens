@@ -87,3 +87,45 @@ rather than presenting 100% as a genuine result, and will run an additional
 templates — to measure whether the model can classify a genuinely unseen
 phrasing, which is a fairer, more honest test of generalization than the
 standard row-level train/test split on this particular dataset.
+
+## Scope of the account_access generalization limitation (finalized)
+
+This limitation is narrow and well-understood, not systemic:
+
+**Affected:** Only the classifier's (Stage 15-17) ability to correctly
+categorize a genuinely novel phrasing of an account_access incident —
+one that doesn't resemble any of the 3 existing templates for that
+category in the training data.
+
+**NOT affected:**
+- The similarity/retrieval engine (Stages 8-10) — retrieval relies on
+  lexical overlap with the existing corpus, not generalization to unseen
+  phrasing in the same way classification does. A query resembling any
+  of the existing account_access templates retrieves normally.
+- Clustering (Stage 11) — unsupervised, no train/test generalization
+  concept applies.
+- Classification of any other issue_type category — all 7 other
+  categories had 7+ unique templates and generalized correctly (100%
+  accuracy) in the Stage 17 template-holdout test.
+- The reported 100% row-level accuracy — separately known to reflect
+  memorization (Stage 16), unaffected by this finding either way.
+
+## Considered fix (not implemented — documented for future work)
+
+A concrete augmentation path was investigated: `ameau01/synthetic-it-support-tickets`
+(Hugging Face, MIT license, 745 records, evaluated during dataset selection)
+was checked for real text diversity relevant to account_access. Verified
+findings: 514 of 745 records match account/authentication-related keywords
+(login, password, lockout, MFA, SSO, sign-in, access denied), with 327
+genuinely unique title phrasings among them (not another template set) —
+confirmed via `root_cause` field uniqueness (745 of 745 unique) and manual
+inspection of sample titles (BitLocker, GlobalProtect VPN, Conditional
+Access, Software Center — naturally varied IT terminology).
+
+This was not implemented in the current system because it would require
+reopening and re-running four already-completed stages (6, 7, 14, 16) on
+an augmented, differently-sourced dataset, which was judged out of scope
+for this stage of the certification project. It remains a concrete,
+evidenced next step (see Stage 27's Future Work) rather than a vague
+aspiration — the exact dataset, filter criteria, and real diversity
+numbers needed to execute it are recorded here.
