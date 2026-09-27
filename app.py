@@ -13,6 +13,7 @@ from src.similarity_engine import SimilarityEngine
 from src.retrieval import RetrievalEngine
 from src.analyzer import IncidentIntelligenceEngine, format_intelligence_report, DEFAULT_METADATA
 from src.explainability import explain_similarity, explain_classification
+from src.report_generator import generate_html_report
 from src.nlp_processor import default_preprocess, ensure_nltk_data
 from src.config import DATA_PROCESSED_DIR, PROJECT_ROOT
 
@@ -175,6 +176,7 @@ elif page == "🔎 Analyze New Incident":
                       f"{rp['avg_resolution_time_hours']}h" if rp["avg_resolution_time_hours"] else "N/A")
 
         st.session_state["last_report"] = format_intelligence_report(result)
+        st.session_state["last_html_report"] = generate_html_report(result)
         st.session_state["last_query"] = query
 
 # ============================================================
@@ -223,9 +225,11 @@ elif page == "📄 Reports":
     st.title("Analysis Reports")
     if "last_report" in st.session_state:
         st.caption(f"Last analyzed: {st.session_state['last_query']}")
-        st.code(st.session_state["last_report"], language=None)
-        st.download_button("Download this report (.txt)", st.session_state["last_report"],
+        st.download_button("Download full report (.html, with chart)",
+                            st.session_state["last_html_report"],
+                            file_name="incident_report.html", mime="text/html")
+        st.download_button("Download plain-text report (.txt)", st.session_state["last_report"],
                             file_name="incident_report.txt")
+        st.code(st.session_state["last_report"], language=None)
     else:
-        st.info("No analysis run yet — go to 'Analyze New Incident' first. "
-                "Full structured report generation with charts is built in Stage 21.")
+        st.info("No analysis run yet — go to 'Analyze New Incident' first.")
