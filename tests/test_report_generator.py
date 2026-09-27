@@ -67,3 +67,28 @@ def test_empty_result_does_not_crash_and_still_has_limitations():
 def test_no_chart_when_no_similar_incidents():
     html = generate_html_report(EMPTY_RESULT)
     assert "data:image/png;base64," not in html
+
+
+def test_html_injection_in_query_is_escaped():
+    """Regression test for Stage 24: a real XSS vulnerability was found
+    and fixed — raw HTML/script tags in user-supplied query text must
+    never appear unescaped in the generated report."""
+    malicious_result = dict(EMPTY_RESULT)
+    malicious_result["query"] = '<script>alert("xss")</script> Payment API is down'
+    html = generate_html_report(malicious_result)
+    assert "<script>alert" not in html
+    assert "&lt;script&gt;" in html
+
+
+def test_html_injection_in_resolution_summary_is_escaped():
+    """Similar_incidents fields come from the dataset, not direct user
+    input, but are escaped defensively — this must hold too."""
+    malicious_result = dict(SAMPLE_RESULT)
+    malicious_result["similar_incidents"] = [{
+        "ticket_id": "TCKT_999", "similarity": 0.9, "issue_type": "bug",
+        "initial_message": "normal text",
+        "resolution_summary": '<img src=x onerror="alert(1)">',
+        "has_resolution": True,
+    }]
+    html = generate_html_report(malicious_result)
+    assert "<img src=x onerror" not in html

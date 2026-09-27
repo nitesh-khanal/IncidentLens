@@ -8,6 +8,7 @@ evidential throughout, and an explicit limitations section is always
 included, not optional.
 """
 import base64
+import html as html_module
 import io
 from datetime import datetime, timezone
 
@@ -80,17 +81,17 @@ def generate_html_report(result: dict) -> str:
     if similar:
         rows = ""
         for r in similar:
-            resolution = (
-                r["resolution_summary"] if r["has_resolution"]
+            safe_resolution = (
+                html_module.escape(r["resolution_summary"]) if r["has_resolution"]
                 else "<em>No resolution recorded.</em>"
             )
             rows += f"""
             <tr>
-                <td>{r['ticket_id']}</td>
+                <td>{html_module.escape(str(r['ticket_id']))}</td>
                 <td>{r['similarity']*100:.0f}%</td>
-                <td>{r['issue_type']}</td>
-                <td>{r['initial_message']}</td>
-                <td>{resolution}</td>
+                <td>{html_module.escape(str(r['issue_type']))}</td>
+                <td>{html_module.escape(str(r['initial_message']))}</td>
+                <td>{safe_resolution}</td>
             </tr>"""
         similar_html = f"""
         <table>
@@ -101,7 +102,7 @@ def generate_html_report(result: dict) -> str:
     cluster_html = "<p><em>No cluster assignment available.</em></p>"
     if cluster:
         cluster_html = f"""
-        <p><strong>Cluster #{cluster['cluster_id']}</strong> — characterized by: {', '.join(cluster['top_terms'][:8])}</p>
+        <p><strong>Cluster #{cluster['cluster_id']}</strong> — characterized by: {html_module.escape(', '.join(str(t) for t in cluster['top_terms'][:8]))}</p>
         <p class="note">{cluster['note']}</p>
         """
 
@@ -133,7 +134,7 @@ th {{ background: #f5f5f5; }}
 <p class="note">Generated {timestamp}. This report is a decision-support tool — see Limitations below.</p>
 
 <h2>New Incident</h2>
-<p>{query}</p>
+<p>{html_module.escape(query)}</p>
 
 <h2>Classification (model output)</h2>
 {classification_html}
