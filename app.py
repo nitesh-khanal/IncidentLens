@@ -68,7 +68,17 @@ if page == "🏠 Dashboard":
     col1.metric("Total incidents", f"{len(df):,}")
     col2.metric("Resolution coverage", f"{df['has_resolution'].mean()*100:.1f}%")
     col3.metric("Issue types", df["issue_type"].nunique())
-    col4.metric("Avg CSAT", f"{df['csat_score'].mean():.2f} / 5")
+    rated = df[df["csat_score"] > 0]
+    unrated_pct = (df["csat_score"] == 0).mean() * 100
+    col4.metric(
+        "Avg CSAT (scores 1-5)",
+        f"{rated['csat_score'].mean():.2f} / 5",
+        help=(
+            f"Excludes the {unrated_pct:.1f}% of tickets with a score of 0. The dataset "
+            "does not document 0; it is treated as 'no rating' because the zero rate is "
+            "about 30% in every ticket status, including resolved."
+        ),
+    )
 
     c1, c2 = st.columns(2)
     with c1:

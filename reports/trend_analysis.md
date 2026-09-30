@@ -36,3 +36,11 @@ limitation of synthetic data worth stating in the certification report,
 not a sign the analysis method is wrong. A real production dataset would
 be expected to show genuine trends (e.g. resolution time improving as a
 team gains experience, or volume spiking around releases).
+
+## Correction found during Stage 27
+csat_score ranges 0-5, not 1-5; 29.9% of tickets score 0, which the
+dataset does not document (see docs/dataset.md). The CSAT correlation
+above (r=0.122) was computed including those zeros. Recomputed on rated
+tickets only (score 1-5): r=0.148. Both are well under the 0.3 threshold
+used elsewhere in this report, so "no meaningful trend" still holds
+either way.

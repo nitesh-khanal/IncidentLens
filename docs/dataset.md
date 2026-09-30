@@ -92,3 +92,10 @@ dataset — they are separate synthetic sources. This dataset is used standalone
 for **process/workflow analytics** (Stage 13) — escalation patterns, time spent
 per stage, reassignment behavior — not merged with or joined to the primary
 dataset's NLP/similarity pipeline.
+
+## Note on csat_score (found during Stage 27)
+- Values are 0 to 5, not 1 to 5. 29,941 of 100,000 tickets (29.9%) have a score of 0.
+- No documentation of what 0 means was found.
+- The zero rate is about 30% in every ticket status and with or without a recorded resolution, so zeros are not concentrated on unresolved tickets.
+- Only 5.8% of tickets score 1, so 0 is not simply the tail of the rating scale. The dashboard treats 0 as "no rating", as a labelled assumption, not a confirmed fact.
+- Mean CSAT is 2.24 including zeros and 3.20 excluding them. `csat_score` is excluded from the classifier features (post-resolution information, Stage 14), so the models are unaffected.
