@@ -77,8 +77,7 @@ stage needed them (`retrieval.py`, `evaluation.py`, `model_evaluation.py`,
 
 ## Installation
 
-Developed and tested on Python 3.12. Downloading the data needs a free Kaggle
-account.
+Developed and tested on Python 3.12.
 
 ```bash
 git clone https://github.com/nitesh-khanal/IncidentLens.git
@@ -86,14 +85,24 @@ cd IncidentLens
 python3 -m venv ../incidentlens-venv
 source ../incidentlens-venv/bin/activate
 pip install -r requirements.txt
+streamlit run app.py
 ```
+
+That's enough to run the dashboard immediately. The 8 files it needs
+(the cleaned/clustered dataset, the fitted TF-IDF vectorizer and matrix,
+the clusterer, the feature builder, and the three trained models, about
+47 MB total) are committed to this repository specifically so a clone
+runs without any external dependency or a pipeline run.
 
 NLTK resources (punkt, stopwords, wordnet) download automatically on first use.
 
-### Get the data
+### Reproducing the pipeline from raw data (optional)
 
-The datasets are not stored in this repository. Save your Kaggle API token to
-`~/.kaggle/access_token` (never commit it), then:
+Not needed to run the app. Needed only to regenerate the committed
+artifacts yourself, verify the results independently, or work on an
+earlier pipeline stage. Requires a free Kaggle account.
+
+Save your Kaggle API token to `~/.kaggle/access_token` (never commit it), then:
 
 ```bash
 cd data/raw
