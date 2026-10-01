@@ -16,28 +16,28 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
+from src.config import PROJECT_ROOT
+
+NLP_DATA_DIR = PROJECT_ROOT / "data" / "nltk"
+# Prefer the shipped resources over machine-specific NLTK caches.
+nltk.data.path[:] = [str(NLP_DATA_DIR)]
+
 _STEMMER = PorterStemmer()
 _LEMMATIZER = WordNetLemmatizer()
 
 
 def ensure_nltk_data():
-    """Download required NLTK corpora if not already present locally."""
-    resources = {
-        "tokenizers/punkt": "punkt",
-        "tokenizers/punkt_tab": "punkt_tab",
-        "corpora/stopwords": "stopwords",
-        "corpora/wordnet": "wordnet",
-        "corpora/omw-1.4": "omw-1.4",
-    }
-    for path, name in resources.items():
-        try:
-            nltk.data.find(path)
-        except LookupError:
-            # NLTK commonly keeps WordNet as a zip; that is a usable resource.
-            try:
-                nltk.data.find(f"{path}.zip")
-            except LookupError:
-                nltk.download(name, quiet=True, raise_on_error=True)
+    """Verify bundled English resources. Never download at app startup."""
+    required = [
+        NLP_DATA_DIR / "corpora" / "wordnet.zip",
+        NLP_DATA_DIR / "corpora" / "stopwords" / "english",
+        *[NLP_DATA_DIR / "tokenizers" / "punkt_tab" / "english" / name
+          for name in ("abbrev_types.txt", "collocations.tab", "ortho_context.tab", "sent_starters.txt")],
+    ]
+    missing = [str(path.relative_to(PROJECT_ROOT)) for path in required if not path.is_file()]
+    if missing:
+        raise LookupError("Bundled English language resources are missing: " + ", ".join(missing)
+                          + ". Download or clone the complete repository again.")
 
 
 def _stopwords_set():

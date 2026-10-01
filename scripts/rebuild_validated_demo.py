@@ -65,6 +65,8 @@ def main(evaluate_only=False):
         joblib.dump(model,DATA_PROCESSED_DIR/'models'/f'{name}.joblib')
     from scripts.measure_challenge import measure
     challenge=measure();(reports/'challenge_results.json').write_text(json.dumps(challenge,indent=2)+'\n')
+    from scripts.generate_runtime_manifest import main as refresh_manifest
+    refresh_manifest()
     from scripts.write_validation_report import main as write_report
     write_report()
     print(json.dumps({'template_holdout':holdout['models'],'grouped_summary':summary['grouped_summary'],

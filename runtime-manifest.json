@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "python": "3.12",
+  "packages": {
+    "joblib": "1.6.0",
+    "matplotlib": "3.11.2",
+    "nltk": "3.10.3",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "pyarrow": "25.0.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "streamlit": "1.64.0"
+  },
+  "files": {
+    "data/processed/tickets_clustered.csv": "c76285a969708b040cbea6d30d7032ac89b9f4bf9443238f924a5d54e836f87b",
+    "data/processed/tfidf_vectorizer.joblib": "3939687e8caa030ac0bc6b722f4fbe30edabde54f7d5e6ccba3faacdd9f7bafd",
+    "data/processed/tfidf_matrix.joblib": "957f3c57fec05ad2003f9a8b2106a6a5bed00442e6125d2c683d129012141adc",
+    "data/processed/clusterer.joblib": "76adce31ccaab1f39f888979f4179ca43138053314ea41db728f09e15dfbca54",
+    "data/processed/feature_builder.joblib": "358d29b4fa09d19e83a5c79abbc1ab2106426f398166ce10292b509da8423d2a",
+    "data/processed/models/logistic_regression.joblib": "846d1fa00058bb7f0804ce462fd676888a81918efb4cc13992e6346358a60864",
+    "data/processed/models/decision_tree.joblib": "ae51314209074a998c4d8110bb998741dfd9998e4f3139b68b1229860259d192",
+    "data/processed/models/random_forest.joblib": "c20387e5929d79db06642512495af93861507c036ab65a9b2e8ecfe1cca3d082",
+    "data/nltk/corpora/wordnet.zip": "cbda5ea6eef7f36a97a43d4a75f85e07fccbb4f23657d27b4ccbc93e2646ab59",
+    "data/nltk/corpora/stopwords/english": "f6d005956f407dbc6ea32e5ff0c7e8e6f71488d3239b9023efdc7fc139d6375b",
+    "data/nltk/tokenizers/punkt_tab/english/abbrev_types.txt": "92a3e070f43d9b4c5534758ca40ad7343b04e7e29bfe0c2eb658a39445a4f779",
+    "data/nltk/tokenizers/punkt_tab/english/collocations.tab": "8e2da1225e4dd2cc9dba261ee231ccb134859e21b46006e7f472c5ee269af0cf",
+    "data/nltk/tokenizers/punkt_tab/english/ortho_context.tab": "4bbcca25ed3d3f06c02402abf8419b9f033b8adc06e7b482eca4e45f81a5dc4c",
+    "data/nltk/tokenizers/punkt_tab/english/sent_starters.txt": "f3f8535483e1dba487241b764945168123bca3209a9645e59acd1225dc76edac"
+  }
+}

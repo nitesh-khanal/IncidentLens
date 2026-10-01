@@ -1,0 +1,3 @@
+# Preserve checksummed corpus, models and language resources on every OS.
+data/processed/** -text
+data/nltk/** -text

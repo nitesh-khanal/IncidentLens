@@ -19,6 +19,8 @@ sys.path.insert(0, str(PROJECT_ROOT / "data" / "test"))
 from controlled_eval_set import TEST_CASES  # noqa: E402
 
 DATA_PATH = DATA_PROCESSED_DIR / "tickets_nlp.csv"
+if not DATA_PATH.exists():
+    DATA_PATH = DATA_PROCESSED_DIR / "tickets_clustered.csv"
 VECTORIZER_PATH = DATA_PROCESSED_DIR / "tfidf_vectorizer.joblib"
 MATRIX_PATH = DATA_PROCESSED_DIR / "tfidf_matrix.joblib"
 REPORT_PATH = PROJECT_ROOT / "reports" / "retrieval_evaluation.md"

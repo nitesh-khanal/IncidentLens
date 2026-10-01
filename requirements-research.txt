@@ -1,0 +1,4 @@
+-r requirements-dev.txt
+kaggle==2.2.4
+seaborn==0.13.2
+tabulate==0.10.0

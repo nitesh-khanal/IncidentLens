@@ -9,6 +9,8 @@ from src.similarity_engine import SimilarityEngine
 from src.config import DATA_PROCESSED_DIR
 
 DATA_PATH = DATA_PROCESSED_DIR / "tickets_nlp.csv"
+if not DATA_PATH.exists():
+    DATA_PATH = DATA_PROCESSED_DIR / "tickets_clustered.csv"
 VECTORIZER_PATH = DATA_PROCESSED_DIR / "tfidf_vectorizer.joblib"
 MATRIX_PATH = DATA_PROCESSED_DIR / "tfidf_matrix.joblib"
 

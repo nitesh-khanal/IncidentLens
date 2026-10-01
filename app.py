@@ -97,7 +97,7 @@ try:
 except (OSError, ValueError, LookupError, EOFError) as exc:
     st.title("IncidentLens")
     st.error("The demonstration data or language resources could not be loaded.")
-    st.info("Check that the committed data/processed files are available locally and that the NLTK resources were prepared before the demonstration.")
+    st.info("Check that the committed data/processed files are available locally and that the bundled data/nltk resources are included in the clone.")
     with st.expander("Startup details"):
         st.code(str(exc), language=None)
     st.stop()

@@ -61,7 +61,7 @@ IncidentLens/
 │   ├── explainability.py     similarity and classifier explanations
 │   └── report_generator.py   HTML report (escaped output)
 ├── scripts/                  runnable pipeline and analysis steps
-├── tests/                    129 automated tests
+├── tests/                    132 automated tests
 ├── notebooks/                01_data_exploration.ipynb
 ├── docs/                     methodology and decisions
 ├── reports/                  generated results
@@ -76,30 +76,49 @@ stage needed them (`retrieval.py`, `evaluation.py`, `model_evaluation.py`,
 
 ## Installation
 
-Developed and tested on Python 3.12.
+No GitHub login, Kaggle account, API key, or access to the author's device is
+needed to run the dashboard. Install **64-bit Python 3.12** and download this
+public repository (a Git clone or GitHub's Download ZIP both work).
 
 ```bash
 git clone https://github.com/nitesh-khanal/IncidentLens.git
 cd IncidentLens
-python3 -m venv ../incidentlens-venv
-source ../incidentlens-venv/bin/activate
-pip install -r requirements.txt
-streamlit run app.py
 ```
 
-That's enough to run the dashboard immediately. The 8 files it needs
-(the cleaned/clustered dataset, the fitted TF-IDF vectorizer and matrix,
-the clusterer, the feature builder, and the three trained models, about
-47 MB total) are committed to this repository specifically so a clone
-runs without any external dependency or a pipeline run.
+**Windows:**
+```powershell
+py -3.12 run.py
+```
 
-NLTK resources (punkt, stopwords, wordnet) download automatically on first use.
+**macOS / Linux:**
+```bash
+python3.12 run.py
+```
+
+The launcher creates `.venv` inside the project, installs the pinned packages,
+checks the shipped data and models, and opens the dashboard. Internet access is
+needed for the initial package installation. After setup, the dashboard runs
+offline: the trained models, 100,000 historical tickets, and required English
+language resources are included. No separate training or dataset download is
+needed. Use a writable project folder; the launcher does not require administrator
+access. On Linux, your Python installation must include `venv` and `pip` support.
+
+Check setup without starting the app with `run.py --check`, or use
+`run.py --port 8502` if the default port is occupied. Use the same Python command
+shown above before these arguments. If you move the repository to another device,
+create a new environment there; do not copy `.venv` between devices.
+
+Python and package versions are pinned because the serialized models depend on
+the training environment. The CI workflow checks clean installs on Windows,
+macOS, and Linux. See [portability checks](docs/PORTABILITY.md).
 
 ### Reproducing the pipeline from raw data (optional)
 
 Not needed to run the app. Needed only to regenerate the committed
 artifacts yourself, verify the results independently, or work on an
 earlier pipeline stage. Requires a free Kaggle account.
+
+Install the optional research dependencies with `python -m pip install -r requirements-research.txt` in your environment.
 
 Save your Kaggle API token to `~/.kaggle/access_token` (never commit it), then:
 
@@ -189,7 +208,7 @@ Evaluation now splits raw rows before fitting TF-IDF and categorical encoders. A
 - Category suggestions require at least three matched vocabulary terms and a model score of at least 0.5. Otherwise the app reports insufficient evidence and withholds category statistics. The gate is a heuristic and is not calibrated confidence.
 - The controlled retrieval report is regenerated after normalization: [retrieval results](reports/retrieval_evaluation.md).
 - The rebuilt k=8 clustering silhouette is about 0.305 on a fixed 5,000-row sample. Cluster identifiers changed after rebuilding; current sizes are shown in Recurring Patterns and recorded in the validation JSON.
-- 129 automated tests pass; see [demonstration verification](reports/demo_verification.md).
+- 132 automated tests pass; see [demonstration verification](reports/demo_verification.md).
 
 The unchanged dataset still has only 96 descriptions. No real incident data or missing resolutions were fabricated.
 
@@ -232,6 +251,7 @@ Recommended rebuild and validation of the committed demo corpus:
 ```bash
 python -m scripts.rebuild_validated_demo
 python -m scripts.evaluate_retrieval
+python -m pip install -r requirements-dev.txt
 python -m pytest tests/ -q
 ```
 

@@ -37,3 +37,7 @@ data/processed/*
 !.streamlit/
 .streamlit/*
 !.streamlit/config.toml
+
+# Local setup and application caches
+.cache/
+.pytest_cache/
