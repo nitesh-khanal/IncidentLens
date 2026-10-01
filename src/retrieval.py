@@ -50,6 +50,8 @@ def format_retrieval_report(query: str, results: list) -> str:
     for r in results:
         lines.append(f"Incident #{r['ticket_id']}")
         lines.append(f"Similarity: {r['similarity'] * 100:.0f}%")
+        lines.append(f"Description: {r['initial_message']}")
+        lines.append(f"Same wording in {r.get('description_occurrences', 1):,} tickets; one representative shown.")
         lines.append("")
         lines.append(f"Issue type: {r.get('issue_type', 'unknown')}")
         lines.append(f"Priority: {r.get('priority', 'unknown')}  |  Status: {r.get('status', 'unknown')}")

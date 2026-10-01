@@ -178,6 +178,8 @@ def format_intelligence_report(result: dict) -> str:
     else:
         for r in similar:
             lines.append(f"- {r['ticket_id']} (similarity {r['similarity']*100:.0f}%) — {r['issue_type']}")
+            lines.append(f"    Description: {r['initial_message']}")
+            lines.append(f"    Same wording in {r.get('description_occurrences', 1):,} tickets; one representative shown.")
             if r["has_resolution"]:
                 lines.append(f"    Historical resolution: {r['resolution_summary']}")
             else:

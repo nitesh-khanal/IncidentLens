@@ -61,7 +61,7 @@ IncidentLens/
 │   ├── explainability.py     similarity and classifier explanations
 │   └── report_generator.py   HTML report (escaped output)
 ├── scripts/                  runnable pipeline and analysis steps
-├── tests/                    132 automated tests
+├── tests/                    133 automated tests
 ├── notebooks/                01_data_exploration.ipynb
 ├── docs/                     methodology and decisions
 ├── reports/                  generated results
@@ -208,7 +208,7 @@ Evaluation now splits raw rows before fitting TF-IDF and categorical encoders. A
 - Category suggestions require at least three matched vocabulary terms and a model score of at least 0.5. Otherwise the app reports insufficient evidence and withholds category statistics. The gate is a heuristic and is not calibrated confidence.
 - The controlled retrieval report is regenerated after normalization: [retrieval results](reports/retrieval_evaluation.md).
 - The rebuilt k=8 clustering silhouette is about 0.305 on a fixed 5,000-row sample. Cluster identifiers changed after rebuilding; current sizes are shown in Recurring Patterns and recorded in the validation JSON.
-- 132 automated tests pass; see [demonstration verification](reports/demo_verification.md).
+- 133 automated tests pass; see [demonstration verification](reports/demo_verification.md).
 
 The unchanged dataset still has only 96 descriptions. No real incident data or missing resolutions were fabricated.
 
@@ -303,3 +303,7 @@ workflow analytics, model evaluation, performance, test report.
 No license has been chosen for the IncidentLens source code, so it is under
 default copyright (all rights reserved). The datasets keep their own licenses,
 listed under "Dataset sources, licenses and attribution" above.
+
+Historical search displays distinct descriptions, with a count of repeated wording.
+When available, a representative with a recorded resolution is shown. Different
+descriptions can still receive equal lexical similarity scores.

@@ -265,11 +265,13 @@ elif page == "🔎 Analyze New Incident":
 
         # --- Similar historical incidents ---
         st.subheader("Similar Historical Incidents (historical evidence)")
+        st.caption("Distinct descriptions are shown once. Repeated wording is counted; equal lexical scores can still occur for different descriptions.")
         if result["similar_incidents"]:
             for i, r in enumerate(result["similar_incidents"]):
                 shared = r.get("shared_terms", 0)
                 with st.expander(f"#{i+1} {r['ticket_id']} — {readable(r['issue_type'])} · lexical similarity {r['similarity']*100:.0f}%", expanded=i == 0):
                     st.write(f"**Description:** {r['initial_message']}")
+                    st.caption(f"This wording appears in {r.get('description_occurrences', 1):,} historical tickets. One representative is shown; its resolution does not apply to every occurrence.")
                     if shared <= 2:
                         st.caption(
                             f"⚠️ Based on only {shared} shared word(s) — this match may be "

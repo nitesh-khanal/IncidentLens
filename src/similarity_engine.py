@@ -25,22 +25,33 @@ class SimilarityEngine:
         self.matrix = matrix
         self.metadata_df = metadata_df.reset_index(drop=True)
         ensure_nltk_data()
+        # Repeated synthetic templates must not crowd distinct descriptions out.
+        keys = self.metadata_df["initial_message"].fillna("").astype(str).str.casefold().str.replace(r"\s+", " ", regex=True).str.strip()
+        self.description_counts = keys.value_counts()
+        self.description_keys = keys
+        candidates = self.metadata_df.assign(_description=keys).sort_values(
+            "has_resolution", ascending=False, kind="stable")
+        self.representative_indices = candidates.drop_duplicates("_description").index.to_numpy()
+
 
     def find_similar(self, query_text: str, top_n: int = 5):
         """Return up to top_n similar incidents, ranked by cosine similarity,
-        excluding zero-similarity matches. Empty/whitespace query -> []."""
+        excluding zero-similarity matches and repeated descriptions.
+        Prefer a representative with a recorded resolution. Empty query -> []."""
+        if top_n <= 0:
+            return []
         processed = default_preprocess(query_text)
         if not processed:
             return []
 
         query_vector = self.vectorizer.transform([processed])
-        scores = cosine_similarity(query_vector, self.matrix)[0]
-
-        top_indices = scores.argsort()[::-1][:top_n]
+        scores = cosine_similarity(query_vector, self.matrix[self.representative_indices])[0]
+        top_positions = (-scores).argsort(kind="stable")[:top_n]
 
         results = []
-        for idx in top_indices:
-            if scores[idx] <= 0:
+        for position in top_positions:
+            idx = self.representative_indices[position]
+            if scores[position] <= 0:
                 continue
             row = self.metadata_df.iloc[idx]
             # Count terms where BOTH the query and this candidate have a
@@ -49,7 +60,8 @@ class SimilarityEngine:
             shared_terms = int((query_vector.multiply(self.matrix[idx]) != 0).nnz)
             results.append({
                 "ticket_id": row["ticket_id"],
-                "similarity": float(scores[idx]),
+                "similarity": float(scores[position]),
+                "description_occurrences": int(self.description_counts[self.description_keys.iloc[idx]]),
                 "issue_type": row["issue_type"],
                 "initial_message": row["initial_message"],
                 "resolution_summary": row["resolution_summary"] if row["has_resolution"] else None,

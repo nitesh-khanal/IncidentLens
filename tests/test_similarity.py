@@ -115,3 +115,22 @@ def test_shared_terms_count_present_and_accurate():
     for r in results:
         assert "shared_terms" in r
         assert r["shared_terms"] >= 1  # anything returned has similarity > 0, so at least 1 shared term
+
+
+def test_duplicate_templates_do_not_crowd_out_other_matches():
+    texts = ["Payment charged twice", " payment CHARGED twice ", "Payment invoice incorrect", "Payment charged twice"]
+    vec = IncidentVectorizer()
+    matrix = vec.fit_transform([default_preprocess(t) for t in texts])
+    df = pd.DataFrame({"ticket_id": ["A", "B", "C", "D"], "initial_message": texts,
+                       "issue_type": ["billing_problem"] * 4,
+                       "has_resolution": [False, True, True, True],
+                       "resolution_summary": [None, "Refund issued", "Invoice corrected", "Other outcome"]})
+    engine = SimilarityEngine(vec, matrix, df)
+    results = engine.find_similar("Payment charged twice", top_n=3)
+    assert len(results) == 2
+    assert results[0]["ticket_id"] == "B"
+    assert results[0]["description_occurrences"] == 3
+    assert results[0]["resolution_summary"] == "Refund issued"
+    assert results[1]["ticket_id"] == "C"
+    assert engine.find_similar("Payment charged twice", top_n=3) == results
+    assert engine.find_similar("Payment", top_n=0) == []
