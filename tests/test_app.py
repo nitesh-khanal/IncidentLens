@@ -88,3 +88,15 @@ def test_reports_page_after_analysis_shows_download_buttons(app):
     app.sidebar.radio[0].set_value("📄 Reports").run()
     assert not app.exception
     assert len(app.download_button) >= 2
+
+
+def test_analyze_with_no_vocabulary_overlap_shows_warning(app):
+    """Regression test: a query with no words in the TF-IDF vocabulary
+    must show the low-confidence warning in both the main classification
+    box and the 3-model comparison table, not report a silent prediction."""
+    app.sidebar.radio[0].set_value("🔎 Analyze New Incident").run()
+    app.text_area[0].set_value("hello").run()
+    app.button[0].click().run()
+    assert not app.exception
+    page_text = " ".join(w.value for w in app.caption) + " ".join(w.value for w in app.warning)
+    assert "training vocabulary" in page_text

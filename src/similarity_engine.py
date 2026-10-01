@@ -43,6 +43,10 @@ class SimilarityEngine:
             if scores[idx] <= 0:
                 continue
             row = self.metadata_df.iloc[idx]
+            # Count terms where BOTH the query and this candidate have a
+            # nonzero TF-IDF weight — the real number of shared words
+            # behind this similarity score, not just the score itself.
+            shared_terms = int((query_vector.multiply(self.matrix[idx]) != 0).nnz)
             results.append({
                 "ticket_id": row["ticket_id"],
                 "similarity": float(scores[idx]),
@@ -50,5 +54,6 @@ class SimilarityEngine:
                 "initial_message": row["initial_message"],
                 "resolution_summary": row["resolution_summary"] if row["has_resolution"] else None,
                 "has_resolution": bool(row["has_resolution"]),
+                "shared_terms": shared_terms,
             })
         return results

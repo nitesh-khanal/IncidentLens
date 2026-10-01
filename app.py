@@ -137,7 +137,21 @@ elif page == "🔎 Analyze New Incident":
                 tfidf_vec = artifacts["vectorizer"].transform([processed])
                 X = artifacts["feature_builder"].transform(row, tfidf_vec)
                 comparison = {name: model.predict(X)[0] for name, model in artifacts["models"].items()}
+
+                matched_terms = int(tfidf_vec.nnz)
                 st.write("**Comparison across all 3 trained models:**")
+                if matched_terms == 0:
+                    st.warning(
+                        "None of this text's words appear in the training vocabulary "
+                        "(99 terms). All three predictions below are driven almost "
+                        "entirely by metadata defaults, not the incident text — treat "
+                        "them as unreliable."
+                    )
+                elif matched_terms <= 2:
+                    st.caption(
+                        f"Only {matched_terms} word(s) in this text matched the training "
+                        "vocabulary — treat these predictions as weakly supported."
+                    )
                 st.table(pd.DataFrame([comparison]))
         else:
             st.warning("No classification available for this input.")
@@ -146,8 +160,14 @@ elif page == "🔎 Analyze New Incident":
         st.subheader("Similar Historical Incidents (historical evidence)")
         if result["similar_incidents"]:
             for i, r in enumerate(result["similar_incidents"]):
+                shared = r.get("shared_terms", 0)
                 with st.expander(f"#{i+1} {r['ticket_id']} — {r['issue_type']} (similarity {r['similarity']*100:.0f}%)"):
                     st.write(f"**Description:** {r['initial_message']}")
+                    if shared <= 2:
+                        st.caption(
+                            f"⚠️ Based on only {shared} shared word(s) — this match may be "
+                            "weakly supported despite the similarity score shown above."
+                        )
                     if r["has_resolution"]:
                         st.success(f"**Historical resolution:** {r['resolution_summary']}")
                     else:

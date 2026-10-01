@@ -53,6 +53,7 @@ class IncidentIntelligenceEngine:
 
         if processed:
             tfidf_vec = self.vectorizer.transform([processed])
+            matched_terms = int(tfidf_vec.nnz)
 
             row = pd.DataFrame([{
                 "created_at": datetime.now(timezone.utc).isoformat(),
@@ -61,6 +62,12 @@ class IncidentIntelligenceEngine:
             }])
             X = self.feature_builder.transform(row, tfidf_vec)
             predicted = self.classifier.predict(X)[0]
+
+            confidence = None
+            if hasattr(self.classifier, "predict_proba"):
+                proba = self.classifier.predict_proba(X)[0]
+                confidence = float(proba.max())
+
             note = (
                 "Model output, not a confirmed category. Metadata was "
                 + ("provided by the caller." if metadata_provided else
@@ -73,9 +80,33 @@ class IncidentIntelligenceEngine:
                     "docs/ml_problem_definition.md) — confidence is lower for "
                     "phrasing unlike those templates."
                 )
+            if matched_terms == 0:
+                note += (
+                    " WARNING: none of this text's words appear in the "
+                    "training vocabulary (99 terms). This prediction is "
+                    "driven almost entirely by metadata defaults, not the "
+                    "incident text — treat it as unreliable."
+                )
+            elif matched_terms <= 2:
+                note += (
+                    f" Only {matched_terms} word(s) in this text matched the "
+                    "training vocabulary — treat this prediction as weakly "
+                    "supported, even though the model reports a definite "
+                    "category."
+                )
+            elif confidence is not None and confidence < 0.3:
+                note += (
+                    f" Low confidence ({confidence*100:.0f}%, vs. a "
+                    f"{100/len(self.classifier.classes_):.0f}% random "
+                    "baseline across 8 categories) — the text gave the "
+                    "model little to distinguish this category from others."
+                )
+
             classification = {
                 "predicted_issue_type": predicted,
                 "metadata_provided": metadata_provided,
+                "matched_vocabulary_terms": matched_terms,
+                "confidence": confidence,
                 "note": note,
             }
 

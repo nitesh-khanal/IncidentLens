@@ -125,3 +125,33 @@ def test_format_report_produces_readable_string():
     assert "SIMILAR HISTORICAL INCIDENTS" in report
     assert "CLUSTER MEMBERSHIP" in report
     assert "RECURRING PATTERNS" in report
+
+
+def test_no_vocabulary_overlap_triggers_warning():
+    """Regression test: a query with zero matching vocabulary terms must
+    warn that the prediction is unreliable, not report it silently as if
+    it were a normal confident result."""
+    engine = build_full_engine()
+    result = engine.analyze("hello there completely unrelated words", top_n=2)
+    assert result["classification"]["matched_vocabulary_terms"] == 0
+    assert "WARNING" in result["classification"]["note"]
+
+
+def test_matched_vocabulary_terms_and_confidence_present():
+    engine = build_full_engine()
+    result = engine.analyze(RAW_TEXTS[0], top_n=2)
+    c = result["classification"]
+    assert "matched_vocabulary_terms" in c
+    assert c["matched_vocabulary_terms"] > 0
+    assert c["confidence"] is None or 0.0 <= c["confidence"] <= 1.0
+
+
+def test_very_few_matched_terms_flagged_even_with_moderate_confidence():
+    """Regression test: 'cant login' matched only 1 vocabulary term and
+    got 45% confidence — confidence-only checks missed this. Low term
+    count must be flagged on its own."""
+    engine = build_full_engine()
+    result = engine.analyze("cant login", top_n=2)
+    c = result["classification"]
+    if c["matched_vocabulary_terms"] and c["matched_vocabulary_terms"] <= 2:
+        assert "word(s) in this text matched" in c["note"]

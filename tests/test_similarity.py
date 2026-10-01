@@ -103,3 +103,15 @@ def test_result_fields_present():
         r = results[0]
         for field in ["ticket_id", "similarity", "issue_type", "initial_message", "has_resolution"]:
             assert field in r
+
+
+def test_shared_terms_count_present_and_accurate():
+    """Regression test: each result must report how many words it
+    actually shares with the query, so a low-overlap 'match' (e.g. one
+    generic word driving a 35% score) can be distinguished from a
+    genuinely well-supported one."""
+    engine = build_engine()
+    results = engine.find_similar(QUERY, top_n=5)
+    for r in results:
+        assert "shared_terms" in r
+        assert r["shared_terms"] >= 1  # anything returned has similarity > 0, so at least 1 shared term
