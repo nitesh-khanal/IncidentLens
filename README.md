@@ -8,8 +8,7 @@ retrieves historically similar incidents, shows how they were resolved,
 classifies the incident, and surfaces recurring patterns, as evidence and
 never as a definitive root cause.
 
-Status: feature-complete. The final clean-environment verification and the
-v1.0.0 tag are still pending.
+Status: working college-demonstration prototype. Runtime tests pass in a fresh local environment; a v1.0.0 release and independent real-world validation are still pending.
 
 ## Problem statement
 
@@ -62,7 +61,7 @@ IncidentLens/
 │   ├── explainability.py     similarity and classifier explanations
 │   └── report_generator.py   HTML report (escaped output)
 ├── scripts/                  runnable pipeline and analysis steps
-├── tests/                    105 automated tests
+├── tests/                    129 automated tests
 ├── notebooks/                01_data_exploration.ipynb
 ├── docs/                     methodology and decisions
 ├── reports/                  generated results
@@ -153,7 +152,7 @@ offline.
 
 ## Similarity methodology
 
-TF-IDF vectors (99-term vocabulary) compared with cosine similarity
+TF-IDF vectors (97-term vocabulary after authentication phrase normalization) compared with cosine similarity
 (`docs/tfidf_representation.md`). TF-IDF is lexical: it matches shared words,
 not meaning. `src/explainability.py` decomposes a score into exact per-term
 contributions that sum to the real cosine value.
@@ -171,7 +170,7 @@ similar language; it is not a claim about a shared root cause.
 ## Machine learning methodology
 
 Task: predict `issue_type` (8 balanced classes) from information available at
-ticket creation. The 138-feature matrix is 99 TF-IDF terms, 34 one-hot
+ticket creation. The rebuilt deployment matrix has 136 features: 97 TF-IDF terms, 34 one-hot
 categorical features, and 5 numeric or temporal features. Seven fields known
 only after resolution (resolution summary and time, `has_resolution`, `status`,
 `reopened`, `csat_score`, `customer_sentiment`) are excluded to prevent
@@ -179,40 +178,44 @@ leakage, and a runtime assertion enforces this. Three models are compared with
 a fixed `random_state` and a stratified 80/20 split
 (`docs/ml_problem_definition.md`, `docs/feature_engineering.md`).
 
-## Evaluation (real results)
+## Evaluation and evidence boundaries
 
-| Component | Result |
-|---|---|
-| Retrieval, 10-case controlled set | Precision@1/3/5 = 0.714 over the 7 cases with a defined expected category. Both failures (the short and the noisy query) are diagnosed: "log in" becomes `log` after stopword removal, so a query written as "login" does not match. |
-| Classification, row-level split | 100% accuracy for all three models, including 5-fold cross-validation. This is not evidence of skill: the dataset has only 96 unique texts, each tied to exactly one label. |
-| Classification, template-holdout split | 54.47% accuracy for all three models (macro F1: Logistic Regression 0.6231, Decision Tree 0.7036, Random Forest 0.6313). Checked per template for Random Forest: 17 of 19 unseen templates scored 100% and both `account_access` templates scored 0%, because that category has only 3 templates in total. |
-| Clustering, k=8 | Silhouette 0.307 (5,000-row sample). Two pure clusters, one bug-plus-performance cluster, and about 42% of incidents in one large mixed cluster. |
-| Trends | No meaningful trend in volume, resolution time, resolution coverage, CSAT, or reopened rate (every correlation had an absolute value below 0.3). |
-| Workflow analytics | 57.7% of cases escalate from L1 to L2, 6.3% reach L3, 3.8% are reopened, 3.0% are rejected at L1; mean resolution 14.73 h, median 12.53 h. |
-| Tests | 105 of 105 passing across data, NLP, similarity, clustering, ML, and application (`reports/test_report.md`). |
-| Performance | Retrieval about 11 ms, full analysis about 28 ms, HTML report about 77 ms (`reports/performance.md`). |
-| Security | One real XSS in the report generator was found and fixed, with regression tests (`docs/security.md`). |
+Evaluation now splits raw rows before fitting TF-IDF and categorical encoders. A fixed unseen-template holdout and three-fold grouped validation share no normalized templates between training and test. See [the measured model report](reports/model_evaluation.md) and [full methodology](docs/DATASET_LIMITATIONS.md).
 
-The three models score identically on both splits, so this evaluation cannot
-rank them; the differences come from the data, not from the algorithms.
+- Row-split accuracy remains 100%; repeated descriptions make this an easy task.
+- Unseen-template accuracy remains 54.47%. The small account-access category remains difficult; this is not production accuracy.
+- Three-fold grouped mean accuracy: Logistic Regression 58.45%, Decision Tree 52.31%, Random Forest 46.30%. Logistic Regression is the primary model because its grouped mean macro F1 is highest.
+- The 48 assistant-authored labelled challenge cases and 6 boundary inputs are exploratory, not an independently human-reviewed or real-world benchmark. None are used for fitting or model selection. Read accuracy together with coverage in [the challenge report](reports/challenge_evaluation.md).
+- Category suggestions require at least three matched vocabulary terms and a model score of at least 0.5. Otherwise the app reports insufficient evidence and withholds category statistics. The gate is a heuristic and is not calibrated confidence.
+- The controlled retrieval report is regenerated after normalization: [retrieval results](reports/retrieval_evaluation.md).
+- The rebuilt k=8 clustering silhouette is about 0.305 on a fixed 5,000-row sample. Cluster identifiers changed after rebuilding; current sizes are shown in Recurring Patterns and recorded in the validation JSON.
+- 129 automated tests pass; see [demonstration verification](reports/demo_verification.md).
+
+The unchanged dataset still has only 96 descriptions. No real incident data or missing resolutions were fabricated.
 
 ## Screenshots
+
+These screenshots document the original run. The current app has updated presentation, evidence gates, clusters, and model selection.
 
 **Dashboard.** The primary dataset at a glance: 100,000 incidents, volume by issue type and by priority, and average CSAT. The CSAT card excludes the 29.9% of tickets scored 0, which the dataset does not document; see the note in `docs/dataset.md`.
 
 ![Dashboard](docs/screenshots/01_dashboard.png)
 
-**Analyze New Incident.** A new incident classified, with the three trained models shown side by side, followed by five similar historical incidents with their resolutions, the incident's cluster, and observed statistics for the predicted category. On this query the three models disagree (Logistic Regression: bug, Decision Tree: account_access, Random Forest: performance), which is consistent with the template-holdout finding under Evaluation: the phrasing is not one of the dataset's templates and no metadata was supplied. The dashboard reports the Random Forest prediction and labels it as model output, not a confirmed category. Each section below it is labelled by the kind of evidence it is.
+**Analyze New Incident.** A new incident classified, with the three trained models shown side by side, followed by five similar historical incidents with their resolutions, the incident's cluster, and observed statistics for the predicted category. On this query the three models disagree (Logistic Regression: bug, Decision Tree: account_access, Random Forest: performance), which is consistent with the template-holdout finding under Evaluation: the phrasing is not one of the dataset's templates and no metadata was supplied. The original dashboard reported the Random Forest prediction and labels it as model output, not a confirmed category. Each section below it is labelled by the kind of evidence it is.
 
 ![Analyze: results](docs/screenshots/02_analyze_results.png)
 
-**Recurring Patterns.** The eight K-Means clusters with their sizes and characteristic terms. Cluster 1 holds 41,802 incidents, about 42% of the dataset (see Evaluation).
+**Recurring Patterns.** The eight K-Means clusters with their sizes and characteristic terms. In the original run, Cluster 1 held 41,802 incidents. Current cluster identifiers and sizes differ after normalization.
 
 ![Recurring patterns](docs/screenshots/03_recurring_patterns.png)
 
 **Reports.** The plain-text report for the analyzed incident. An HTML version with an embedded chart and a limitations section is also downloadable from this page.
 
 ![Report](docs/screenshots/04_report.png)
+
+## Demonstration
+
+See [the five-minute demonstration guide](docs/DEMO_GUIDE.md) for setup, a walkthrough, and likely questions. The app includes illustrative examples, persistent results, and explicit model-limit warnings. Prepare the language resources and warm the dashboard before presenting.
 
 ## Usage
 
@@ -221,10 +224,18 @@ streamlit run app.py
 ```
 
 Pages: Dashboard, Analyze New Incident, Recurring Patterns, Incident Trends,
-ML Performance, Reports. Optional metadata improves classification; when it is
-omitted, the report says so.
+ML Performance, Reports. Optional metadata supplies ticket context; it does not guarantee better accuracy. When it is
+omitted, the report says so. Weak evidence produces an explicit abstention.
 
-Pipeline steps, in order (each writes to `data/processed/` or `reports/`):
+Recommended rebuild and validation of the committed demo corpus:
+
+```bash
+python -m scripts.rebuild_validated_demo
+python -m scripts.evaluate_retrieval
+python -m pytest tests/ -q
+```
+
+Original raw-data pipeline steps, in order (each writes to `data/processed/` or `reports/`):
 
 ```bash
 python3 -m scripts.run_cleaning
@@ -243,7 +254,7 @@ python3 -m pytest tests/ -v
 ## Limitations
 
 - The primary dataset is synthetic and templated (96 unique texts across 100,000 rows), so similarity results often return identical descriptions and row-level accuracy is meaningless as a skill measure.
-- TF-IDF is lexical, not semantic, and the vocabulary is only 99 terms.
+- TF-IDF is lexical, not semantic, and the rebuilt vocabulary is only 97 terms.
 - `account_access` has 3 templates, so classification of new account-lockout phrasing is unreliable.
 - The dataset has no root-cause field; `resolution_summary` is the only evidence and is missing for 39.9% of tickets.
 - No time trends exist in the data, so trend analysis reports an honest null result.
@@ -253,7 +264,7 @@ python3 -m pytest tests/ -v
 ## Future work
 
 - Augment `account_access` with the Hugging Face dataset (514 of 745 records match authentication keywords, 327 unique titles), then re-run the template-holdout test to measure the improvement.
-- Normalize "log in" and "login" before tokenization.
+- Validate the normalization and evidence gate on independently reviewed real tickets.
 - Compare against sentence-embedding retrieval.
 - Validate on a real, non-templated incident dataset.
 - Optional infrastructure (FastAPI, Docker, CI) was deliberately not built.

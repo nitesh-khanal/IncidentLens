@@ -66,15 +66,16 @@ def generate_html_report(result: dict) -> str:
 
     chart_b64 = _similarity_chart_base64(similar)
     chart_html = (
-        f'<img src="data:image/png;base64,{chart_b64}" style="max-width:600px;">'
+        f'<img src="data:image/png;base64,{chart_b64}" alt="Lexical similarity scores for retrieved historical incidents" style="max-width:100%;">'
         if chart_b64 else "<p><em>No similar incidents to chart.</em></p>"
     )
 
     classification_html = "<p><em>No classification available.</em></p>"
     if classification:
+        status = "Suggested issue type" if classification.get("supported", True) else "Insufficient evidence; diagnostic candidate only"
         classification_html = f"""
-        <p><strong>Predicted issue type:</strong> {classification['predicted_issue_type']}</p>
-        <p class="note">{classification['note']}</p>
+        <p><strong>{status}:</strong> {html_module.escape(str(classification['predicted_issue_type']))}</p>
+        <p class="note">{html_module.escape(str(classification['note']))}</p>
         """
 
     similar_html = "<p><em>No historically similar incidents found.</em></p>"
@@ -102,16 +103,16 @@ def generate_html_report(result: dict) -> str:
     cluster_html = "<p><em>No cluster assignment available.</em></p>"
     if cluster:
         cluster_html = f"""
-        <p><strong>Cluster #{cluster['cluster_id']}</strong> — characterized by: {html_module.escape(', '.join(str(t) for t in cluster['top_terms'][:8]))}</p>
-        <p class="note">{cluster['note']}</p>
+        <p><strong>Cluster #{html_module.escape(str(cluster['cluster_id']))}</strong> — characterized by: {html_module.escape(', '.join(str(t) for t in cluster['top_terms'][:8]))}</p>
+        <p class="note">{html_module.escape(str(cluster['note']))}</p>
         """
 
     recurring_html = "<p><em>No recurring pattern data available.</em></p>"
     if recurring:
-        avg_time = f"{recurring['avg_resolution_time_hours']}h" if recurring["avg_resolution_time_hours"] else "N/A"
+        avg_time = f"{recurring['avg_resolution_time_hours']}h" if recurring["avg_resolution_time_hours"] is not None else "N/A"
         recurring_html = f"""
         <p>This predicted category represents <strong>{recurring['issue_type_frequency_pct']}%</strong>
-        of <strong>{recurring['historical_incident_count']:,}</strong> historical incidents.</p>
+        of the historical dataset (<strong>{recurring['historical_incident_count']:,}</strong> incidents in this category).</p>
         <p>Average historical resolution time: <strong>{avg_time}</strong></p>
         """
 
@@ -120,7 +121,9 @@ def generate_html_report(result: dict) -> str:
     return f"""<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>IncidentLens Report</title>
 <style>
-body {{ font-family: -apple-system, Arial, sans-serif; max-width: 800px; margin: 40px auto; color: #222; }}
+body {{ font-family: -apple-system, Arial, sans-serif; max-width: 1000px; margin: 40px auto; padding: 0 24px; color: #16324f; line-height: 1.6; }}
+td {{ overflow-wrap: anywhere; }}
+@media print {{ body {{ margin: 0; }} tr {{ break-inside: avoid; }} }}
 h1 {{ color: #1a4d8f; }}
 h2 {{ border-bottom: 2px solid #eee; padding-bottom: 4px; margin-top: 30px; }}
 .note {{ color: #666; font-size: 0.9em; font-style: italic; }}

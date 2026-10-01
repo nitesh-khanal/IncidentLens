@@ -1,0 +1,660 @@
+{
+  "methodology": "Raw rows split before fitting TF-IDF/IDF and categorical encoders. Grouped tests share zero normalized templates. Challenge set excluded from training.",
+  "row_split": {
+    "train_rows": 80000,
+    "test_rows": 20000,
+    "train_templates": 96,
+    "test_templates": 96,
+    "template_overlap": 96,
+    "vocabulary_size": 97,
+    "models": {
+      "logistic_regression": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "per_category": {
+          "account_access": {
+            "cases": 2522,
+            "accuracy": 1.0
+          },
+          "billing_problem": {
+            "cases": 2476,
+            "accuracy": 1.0
+          },
+          "bug": {
+            "cases": 2470,
+            "accuracy": 1.0
+          },
+          "feature_request": {
+            "cases": 2497,
+            "accuracy": 1.0
+          },
+          "how_to": {
+            "cases": 2548,
+            "accuracy": 1.0
+          },
+          "other": {
+            "cases": 2493,
+            "accuracy": 1.0
+          },
+          "performance": {
+            "cases": 2502,
+            "accuracy": 1.0
+          },
+          "security_concern": {
+            "cases": 2492,
+            "accuracy": 1.0
+          }
+        }
+      },
+      "decision_tree": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "per_category": {
+          "account_access": {
+            "cases": 2522,
+            "accuracy": 1.0
+          },
+          "billing_problem": {
+            "cases": 2476,
+            "accuracy": 1.0
+          },
+          "bug": {
+            "cases": 2470,
+            "accuracy": 1.0
+          },
+          "feature_request": {
+            "cases": 2497,
+            "accuracy": 1.0
+          },
+          "how_to": {
+            "cases": 2548,
+            "accuracy": 1.0
+          },
+          "other": {
+            "cases": 2493,
+            "accuracy": 1.0
+          },
+          "performance": {
+            "cases": 2502,
+            "accuracy": 1.0
+          },
+          "security_concern": {
+            "cases": 2492,
+            "accuracy": 1.0
+          }
+        }
+      },
+      "random_forest": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "per_category": {
+          "account_access": {
+            "cases": 2522,
+            "accuracy": 1.0
+          },
+          "billing_problem": {
+            "cases": 2476,
+            "accuracy": 1.0
+          },
+          "bug": {
+            "cases": 2470,
+            "accuracy": 1.0
+          },
+          "feature_request": {
+            "cases": 2497,
+            "accuracy": 1.0
+          },
+          "how_to": {
+            "cases": 2548,
+            "accuracy": 1.0
+          },
+          "other": {
+            "cases": 2493,
+            "accuracy": 1.0
+          },
+          "performance": {
+            "cases": 2502,
+            "accuracy": 1.0
+          },
+          "security_concern": {
+            "cases": 2492,
+            "accuracy": 1.0
+          }
+        }
+      }
+    }
+  },
+  "template_holdout": {
+    "train_rows": 81651,
+    "test_rows": 18349,
+    "train_templates": 77,
+    "test_templates": 19,
+    "template_overlap": 0,
+    "vocabulary_size": 90,
+    "models": {
+      "logistic_regression": {
+        "accuracy": 0.544716333315167,
+        "macro_f1": 0.5452127659574468,
+        "per_category": {
+          "account_access": {
+            "cases": 8354,
+            "accuracy": 0.0
+          },
+          "billing_problem": {
+            "cases": 0,
+            "accuracy": null
+          },
+          "bug": {
+            "cases": 2326,
+            "accuracy": 1.0
+          },
+          "feature_request": {
+            "cases": 3514,
+            "accuracy": 1.0
+          },
+          "how_to": {
+            "cases": 1206,
+            "accuracy": 1.0
+          },
+          "other": {
+            "cases": 0,
+            "accuracy": null
+          },
+          "performance": {
+            "cases": 1759,
+            "accuracy": 1.0
+          },
+          "security_concern": {
+            "cases": 1190,
+            "accuracy": 1.0
+          }
+        }
+      },
+      "decision_tree": {
+        "accuracy": 0.544716333315167,
+        "macro_f1": 0.5277156698341718,
+        "per_category": {
+          "account_access": {
+            "cases": 8354,
+            "accuracy": 0.0
+          },
+          "billing_problem": {
+            "cases": 0,
+            "accuracy": null
+          },
+          "bug": {
+            "cases": 2326,
+            "accuracy": 1.0
+          },
+          "feature_request": {
+            "cases": 3514,
+            "accuracy": 1.0
+          },
+          "how_to": {
+            "cases": 1206,
+            "accuracy": 1.0
+          },
+          "other": {
+            "cases": 0,
+            "accuracy": null
+          },
+          "performance": {
+            "cases": 1759,
+            "accuracy": 1.0
+          },
+          "security_concern": {
+            "cases": 1190,
+            "accuracy": 1.0
+          }
+        }
+      },
+      "random_forest": {
+        "accuracy": 0.544716333315167,
+        "macro_f1": 0.5277156698341718,
+        "per_category": {
+          "account_access": {
+            "cases": 8354,
+            "accuracy": 0.0
+          },
+          "billing_problem": {
+            "cases": 0,
+            "accuracy": null
+          },
+          "bug": {
+            "cases": 2326,
+            "accuracy": 1.0
+          },
+          "feature_request": {
+            "cases": 3514,
+            "accuracy": 1.0
+          },
+          "how_to": {
+            "cases": 1206,
+            "accuracy": 1.0
+          },
+          "other": {
+            "cases": 0,
+            "accuracy": null
+          },
+          "performance": {
+            "cases": 1759,
+            "accuracy": 1.0
+          },
+          "security_concern": {
+            "cases": 1190,
+            "accuracy": 1.0
+          }
+        }
+      }
+    }
+  },
+  "grouped_folds": [
+    {
+      "train_rows": 66708,
+      "test_rows": 33292,
+      "train_templates": 64,
+      "test_templates": 32,
+      "template_overlap": 0,
+      "vocabulary_size": 77,
+      "models": {
+        "logistic_regression": {
+          "accuracy": 0.6227622251591974,
+          "macro_f1": 0.5127021772328171,
+          "per_category": {
+            "account_access": {
+              "cases": 4154,
+              "accuracy": 1.0
+            },
+            "billing_problem": {
+              "cases": 4053,
+              "accuracy": 1.0
+            },
+            "bug": {
+              "cases": 4118,
+              "accuracy": 1.0
+            },
+            "feature_request": {
+              "cases": 4156,
+              "accuracy": 1.0
+            },
+            "how_to": {
+              "cases": 4252,
+              "accuracy": 1.0
+            },
+            "other": {
+              "cases": 4279,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4121,
+              "accuracy": 0.0
+            },
+            "security_concern": {
+              "cases": 4159,
+              "accuracy": 0.0
+            }
+          }
+        },
+        "decision_tree": {
+          "accuracy": 0.48218791301213504,
+          "macro_f1": 0.3909969864470103,
+          "per_category": {
+            "account_access": {
+              "cases": 4154,
+              "accuracy": 1.0
+            },
+            "billing_problem": {
+              "cases": 4053,
+              "accuracy": 0.0
+            },
+            "bug": {
+              "cases": 4118,
+              "accuracy": 0.8477416221466731
+            },
+            "feature_request": {
+              "cases": 4156,
+              "accuracy": 1.0
+            },
+            "how_to": {
+              "cases": 4252,
+              "accuracy": 1.0
+            },
+            "other": {
+              "cases": 4279,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4121,
+              "accuracy": 0.0
+            },
+            "security_concern": {
+              "cases": 4159,
+              "accuracy": 0.0
+            }
+          }
+        },
+        "random_forest": {
+          "accuracy": 0.3762465457166887,
+          "macro_f1": 0.24732871674861237,
+          "per_category": {
+            "account_access": {
+              "cases": 4154,
+              "accuracy": 0.0
+            },
+            "billing_problem": {
+              "cases": 4053,
+              "accuracy": 0.0
+            },
+            "bug": {
+              "cases": 4118,
+              "accuracy": 1.0
+            },
+            "feature_request": {
+              "cases": 4156,
+              "accuracy": 1.0
+            },
+            "how_to": {
+              "cases": 4252,
+              "accuracy": 1.0
+            },
+            "other": {
+              "cases": 4279,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4121,
+              "accuracy": 0.0
+            },
+            "security_concern": {
+              "cases": 4159,
+              "accuracy": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "train_rows": 66704,
+      "test_rows": 33296,
+      "train_templates": 64,
+      "test_templates": 32,
+      "template_overlap": 0,
+      "vocabulary_size": 83,
+      "models": {
+        "logistic_regression": {
+          "accuracy": 0.6297152811148486,
+          "macro_f1": 0.5846993443147289,
+          "per_category": {
+            "account_access": {
+              "cases": 4200,
+              "accuracy": 0.0
+            },
+            "billing_problem": {
+              "cases": 4263,
+              "accuracy": 1.0
+            },
+            "bug": {
+              "cases": 4113,
+              "accuracy": 1.0
+            },
+            "feature_request": {
+              "cases": 4159,
+              "accuracy": 1.0
+            },
+            "how_to": {
+              "cases": 4237,
+              "accuracy": 1.0
+            },
+            "other": {
+              "cases": 4032,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4195,
+              "accuracy": 1.0
+            },
+            "security_concern": {
+              "cases": 4097,
+              "accuracy": 0.0
+            }
+          }
+        },
+        "decision_tree": {
+          "accuracy": 0.6049375300336377,
+          "macro_f1": 0.5091244419800555,
+          "per_category": {
+            "account_access": {
+              "cases": 4200,
+              "accuracy": 0.0
+            },
+            "billing_problem": {
+              "cases": 4263,
+              "accuracy": 0.0
+            },
+            "bug": {
+              "cases": 4113,
+              "accuracy": 1.0
+            },
+            "feature_request": {
+              "cases": 4159,
+              "accuracy": 0.8415484491464295
+            },
+            "how_to": {
+              "cases": 4237,
+              "accuracy": 1.0
+            },
+            "other": {
+              "cases": 4032,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4195,
+              "accuracy": 1.0
+            },
+            "security_concern": {
+              "cases": 4097,
+              "accuracy": 1.0
+            }
+          }
+        },
+        "random_forest": {
+          "accuracy": 0.5117731859682845,
+          "macro_f1": 0.4426830616576283,
+          "per_category": {
+            "account_access": {
+              "cases": 4200,
+              "accuracy": 0.006904761904761905
+            },
+            "billing_problem": {
+              "cases": 4263,
+              "accuracy": 0.0720150129017124
+            },
+            "bug": {
+              "cases": 4113,
+              "accuracy": 1.0
+            },
+            "feature_request": {
+              "cases": 4159,
+              "accuracy": 1.0
+            },
+            "how_to": {
+              "cases": 4237,
+              "accuracy": 1.0
+            },
+            "other": {
+              "cases": 4032,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4195,
+              "accuracy": 1.0
+            },
+            "security_concern": {
+              "cases": 4097,
+              "accuracy": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "train_rows": 66588,
+      "test_rows": 33412,
+      "train_templates": 64,
+      "test_templates": 32,
+      "template_overlap": 0,
+      "vocabulary_size": 85,
+      "models": {
+        "logistic_regression": {
+          "accuracy": 0.5009278103675326,
+          "macro_f1": 0.37889047194477854,
+          "per_category": {
+            "account_access": {
+              "cases": 4255,
+              "accuracy": 0.0
+            },
+            "billing_problem": {
+              "cases": 4066,
+              "accuracy": 0.0
+            },
+            "bug": {
+              "cases": 4118,
+              "accuracy": 1.0
+            },
+            "feature_request": {
+              "cases": 4172,
+              "accuracy": 1.0
+            },
+            "how_to": {
+              "cases": 4250,
+              "accuracy": 1.0
+            },
+            "other": {
+              "cases": 4152,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4197,
+              "accuracy": 1.0
+            },
+            "security_concern": {
+              "cases": 4202,
+              "accuracy": 0.0
+            }
+          }
+        },
+        "decision_tree": {
+          "accuracy": 0.4821920268167126,
+          "macro_f1": 0.4149024702483952,
+          "per_category": {
+            "account_access": {
+              "cases": 4255,
+              "accuracy": 0.0
+            },
+            "billing_problem": {
+              "cases": 4066,
+              "accuracy": 0.0
+            },
+            "bug": {
+              "cases": 4118,
+              "accuracy": 1.0
+            },
+            "feature_request": {
+              "cases": 4172,
+              "accuracy": 1.0
+            },
+            "how_to": {
+              "cases": 4250,
+              "accuracy": 0.8527058823529412
+            },
+            "other": {
+              "cases": 4152,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4197,
+              "accuracy": 1.0
+            },
+            "security_concern": {
+              "cases": 4202,
+              "accuracy": 0.0
+            }
+          }
+        },
+        "random_forest": {
+          "accuracy": 0.5009278103675326,
+          "macro_f1": 0.42526254789725154,
+          "per_category": {
+            "account_access": {
+              "cases": 4255,
+              "accuracy": 0.0
+            },
+            "billing_problem": {
+              "cases": 4066,
+              "accuracy": 0.0
+            },
+            "bug": {
+              "cases": 4118,
+              "accuracy": 1.0
+            },
+            "feature_request": {
+              "cases": 4172,
+              "accuracy": 1.0
+            },
+            "how_to": {
+              "cases": 4250,
+              "accuracy": 1.0
+            },
+            "other": {
+              "cases": 4152,
+              "accuracy": 0.0
+            },
+            "performance": {
+              "cases": 4197,
+              "accuracy": 1.0
+            },
+            "security_concern": {
+              "cases": 4202,
+              "accuracy": 0.0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "grouped_summary": {
+    "logistic_regression": {
+      "mean_accuracy": 0.5844684388805262,
+      "std_accuracy": 0.05914030608668453,
+      "mean_macro_f1": 0.4920973311641082
+    },
+    "decision_tree": {
+      "mean_accuracy": 0.5231058232874951,
+      "std_accuracy": 0.05786375478063885,
+      "mean_macro_f1": 0.438341299558487
+    },
+    "random_forest": {
+      "mean_accuracy": 0.46298251401750196,
+      "std_accuracy": 0.06149120094664008,
+      "mean_macro_f1": 0.3717581087678307
+    }
+  },
+  "deployment": {
+    "rows": 100000,
+    "vocabulary_size": 97,
+    "features": 136,
+    "silhouette_k8": 0.3049799528983513,
+    "cluster_sizes": {
+      "0": 12449,
+      "1": 12453,
+      "2": 4202,
+      "3": 12470,
+      "4": 12388,
+      "5": 8438,
+      "6": 4121,
+      "7": 33479
+    },
+    "fit_scope": "Full historical corpus after separate evaluation; no challenge cases."
+  },
+  "selected_primary_model": "logistic_regression"
+}

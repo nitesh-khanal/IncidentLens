@@ -100,3 +100,45 @@ def test_analyze_with_no_vocabulary_overlap_shows_warning(app):
     assert not app.exception
     page_text = " ".join(w.value for w in app.caption) + " ".join(w.value for w in app.warning)
     assert "training vocabulary" in page_text
+
+
+def test_results_persist_after_navigation_and_draft_edit():
+    at = AppTest.from_file(APP_PATH, default_timeout=60).run()
+    at.sidebar.radio[0].set_value("🔎 Analyze New Incident").run()
+    at.text_area[0].set_value(CANONICAL_QUERY).run()
+    at.button[0].click().run()
+    saved_report = at.session_state["last_report"]
+    at.sidebar.radio[0].set_value("🏠 Dashboard").run()
+    at.sidebar.radio[0].set_value("🔎 Analyze New Incident").run()
+    assert not at.exception
+    assert any("Showing saved analysis" in caption.value for caption in at.caption)
+    at.text_area[0].set_value("Changed draft text").run()
+    assert at.session_state["last_report"] == saved_report
+    assert any("draft has changed" in info.value for info in at.info)
+
+
+def test_load_example_and_analyze():
+    at = AppTest.from_file(APP_PATH, default_timeout=60).run()
+    at.sidebar.radio[0].set_value("🔎 Analyze New Incident").run()
+    at.button[1].click().run()
+    assert "charged twice" in at.text_area[0].value
+    at.button[0].click().run()
+    assert not at.exception
+    assert at.session_state["last_result"]["similar_incidents"]
+
+
+def test_empty_submit_has_actionable_feedback():
+    at = AppTest.from_file(APP_PATH, default_timeout=60).run()
+    at.sidebar.radio[0].set_value("🔎 Analyze New Incident").run()
+    at.button[0].click().run()
+    assert any("Enter an incident description" in warning.value for warning in at.warning)
+
+
+def test_unrecognized_input_displays_insufficient_evidence():
+    at=AppTest.from_file(APP_PATH,default_timeout=60).run()
+    at.sidebar.radio[0].set_value('🔎 Analyze New Incident').run()
+    at.text_area[0].set_value('quasar nebula starlight').run()
+    at.button[0].click().run()
+    assert not at.exception
+    assert any('Insufficient evidence' in str(metric.value) for metric in at.metric)
+    assert at.session_state['last_result']['recurring_patterns'] is None

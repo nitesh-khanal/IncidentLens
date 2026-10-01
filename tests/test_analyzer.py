@@ -155,3 +155,45 @@ def test_very_few_matched_terms_flagged_even_with_moderate_confidence():
     c = result["classification"]
     if c["matched_vocabulary_terms"] and c["matched_vocabulary_terms"] <= 2:
         assert "word(s) in this text matched" in c["note"]
+
+
+def test_unrecognized_text_does_not_receive_arbitrary_cluster():
+    engine = build_full_engine()
+    result = engine.analyze("quasar nebula starlight")
+    assert result["classification"]["matched_vocabulary_terms"] == 0
+    assert result["cluster"] is None
+    assert result["similar_incidents"] == []
+
+
+def test_report_identifies_category_count_without_wrong_denominator():
+    result = build_full_engine().analyze(RAW_TEXTS[0])
+    report = format_intelligence_report(result)
+    assert "25.0% of the historical dataset (1 incidents in this category)" in report
+
+
+def test_unsupported_candidate_is_not_presented_as_a_category():
+    engine=build_full_engine()
+    result=engine.analyze('quasar nebula starlight')
+    assert result['classification']['supported'] is False
+    assert result['classification']['evidence_status']=='insufficient_evidence'
+    assert result['recurring_patterns'] is None
+    assert 'Insufficient evidence for a category suggestion' in format_intelligence_report(result)
+
+
+def test_one_word_candidate_abstains_even_with_a_high_model_score():
+    result=build_full_engine().analyze('payment')
+    assert result['classification']['supported'] is False
+    assert result['recurring_patterns'] is None
+
+
+def test_low_model_score_abstains_despite_vocabulary_overlap(monkeypatch):
+    import numpy as np
+    engine=build_full_engine()
+    count=len(engine.classifier.classes_)
+    monkeypatch.setattr(engine.classifier,'predict_proba',
+        lambda X: np.full((X.shape[0],count),1/count))
+    result=engine.analyze(RAW_TEXTS[0])
+    assert result['classification']['matched_vocabulary_terms'] >= 3
+    assert result['classification']['confidence'] < 0.5
+    assert result['classification']['supported'] is False
+    assert result['recurring_patterns'] is None

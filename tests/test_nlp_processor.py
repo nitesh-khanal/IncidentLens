@@ -76,3 +76,16 @@ def test_stemming_collapses_related_forms():
 def test_stem_and_lemmatize_mutually_exclusive():
     with pytest.raises(ValueError):
         preprocess_text("running", stem=True, lemmatize=True)
+
+
+def test_authentication_phrases_normalize_before_stopword_removal():
+    from src.nlp_processor import default_preprocess
+    variants=['cannot log in password incorrect','cannot login password incorrect',
+              'cannot sign in password incorrect','cannot sign-in password incorrect']
+    assert len({default_preprocess(text) for text in variants})==1
+    assert 'login' in default_preprocess(variants[0]).split()
+
+
+def test_log_file_is_not_mistaken_for_login():
+    from src.nlp_processor import default_preprocess
+    assert 'login' not in default_preprocess('inspect the log file').split()

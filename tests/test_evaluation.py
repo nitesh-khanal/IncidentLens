@@ -37,3 +37,16 @@ def test_precision_at_k_empty_results():
 
 def test_precision_at_k_none_when_no_expected_category():
     assert precision_at_k(["bug"], None, 3) is None
+
+
+def test_missing_retrieval_slots_count_as_misses():
+    assert precision_at_k(["performance"], "performance", 5) == 0.2
+
+
+def test_invalid_k_is_rejected():
+    import pytest
+    for k in [0, -1, True, 1.5]:
+        with pytest.raises(ValueError):
+            precision_at_k(["bug"], "bug", k)
+        with pytest.raises(ValueError):
+            hit_at_k(["bug"], "bug", k)

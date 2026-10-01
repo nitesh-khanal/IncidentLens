@@ -13,6 +13,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
 RANDOM_STATE = 42
+# Selected by grouped validation macro F1, not by the exploratory challenge set.
+PRIMARY_MODEL = "logistic_regression"
 
 MODEL_REGISTRY = {
     "logistic_regression": lambda: LogisticRegression(

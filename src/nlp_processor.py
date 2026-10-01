@@ -33,7 +33,11 @@ def ensure_nltk_data():
         try:
             nltk.data.find(path)
         except LookupError:
-            nltk.download(name, quiet=True)
+            # NLTK commonly keeps WordNet as a zip; that is a usable resource.
+            try:
+                nltk.data.find(f"{path}.zip")
+            except LookupError:
+                nltk.download(name, quiet=True, raise_on_error=True)
 
 
 def _stopwords_set():
@@ -68,6 +72,8 @@ def preprocess_text(
         raise ValueError("Choose stem or lemmatize, not both — they conflict.")
 
     working = str(text).lower() if lowercase else str(text)
+    # Normalize equivalent authentication phrases before "in" is removed.
+    working = re.sub(r"\b(?:log[\s-]+in|sign[\s-]+in|signin)\b", "login", working, flags=re.IGNORECASE)
     tokens = tokenize(working)
 
     if remove_punctuation:

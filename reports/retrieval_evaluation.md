@@ -7,9 +7,9 @@ human-annotated ground truth exists for this dataset) — see
 docs/retrieval_evaluation.md for the full rationale and limitations.
 
 ## Aggregate metrics
-- Average Precision@1: 0.714
-- Average Precision@3: 0.714
-- Average Precision@5: 0.714
+- Average Precision@1: 0.857
+- Average Precision@3: 0.857
+- Average Precision@5: 0.857
 - Computed over 7 of 10 test cases (cases without
   a defined expected category are evaluated for crash-safety, not precision)
 
@@ -23,7 +23,7 @@ docs/retrieval_evaluation.md for the full rationale and limitations.
 | T4 | unrelated | I was charged twice for my monthly subscription th... | billing_problem | 5 | True | True | True |
 | T5 | duplicate | I cannot log in; the system says my password is in... | account_access | 5 | True | True | True |
 | T6 | short | Login broken. | account_access | 5 | False | False | False |
-| T7 | noisy | cant LOGIN???!! password keeps saying WRONG!!! pls... | account_access | 5 | False | False | False |
+| T7 | noisy | cant LOGIN???!! password keeps saying WRONG!!! pls... | account_access | 5 | True | True | True |
 | T8 | missing_information | It doesn't work. | N/A | 0 | None | None | None |
 | T9 | empty |  | N/A | 0 | None | None | None |
 | T10 | unseen_vocabulary | quixotic flibbertigibbet zorptastic malfunction | N/A | 0 | None | None | None |

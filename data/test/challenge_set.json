@@ -1,0 +1,383 @@
+{
+  "description": "48 assistant-authored category cases and 6 evidence-boundary cases. Exploratory challenge set; not a real-world or independently human-annotated benchmark. Never used to fit models. Changes were motivated by known development failures, so this is not an untouched blind test.",
+  "cases": [
+    {
+      "id": "account_access-01",
+      "query": "I cannot log in because my password is rejected.",
+      "expected_issue_type": "account_access",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "account_access-02",
+      "query": "Login fails even after I reset my password.",
+      "expected_issue_type": "account_access",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "account_access-03",
+      "query": "The sign-in page rejects my two-factor authentication code.",
+      "expected_issue_type": "account_access",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "account_access-04",
+      "query": "Multiple failed attempts have locked me out of my account.",
+      "expected_issue_type": "account_access",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "account_access-05",
+      "query": "Cannot login!!! My password is correct but access is denied.",
+      "expected_issue_type": "account_access",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "account_access-06",
+      "query": "The verification code expires before I can access my account.",
+      "expected_issue_type": "account_access",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "billing_problem-01",
+      "query": "There are two subscription charges on my bank statement for this month.",
+      "expected_issue_type": "billing_problem",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "billing_problem-02",
+      "query": "The invoice total does not match the subscription price I agreed to.",
+      "expected_issue_type": "billing_problem",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "billing_problem-03",
+      "query": "I switched to a cheaper plan but the invoice still uses the old price.",
+      "expected_issue_type": "billing_problem",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "billing_problem-04",
+      "query": "Please refund the duplicate payment for my subscription.",
+      "expected_issue_type": "billing_problem",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "billing_problem-05",
+      "query": "Our billing statement contains an unexpected extra charge.",
+      "expected_issue_type": "billing_problem",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "billing_problem-06",
+      "query": "My monthly subscription was billed twice and needs correcting.",
+      "expected_issue_type": "billing_problem",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "bug-01",
+      "query": "When I press save, the settings revert to their previous values.",
+      "expected_issue_type": "bug",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "bug-02",
+      "query": "The application crashes when I open the notifications page.",
+      "expected_issue_type": "bug",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "bug-03",
+      "query": "Clicking the export button produces an error instead of a file.",
+      "expected_issue_type": "bug",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "bug-04",
+      "query": "My changes disappear after saving the API integration configuration.",
+      "expected_issue_type": "bug",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "bug-05",
+      "query": "The mobile app closes unexpectedly whenever I open analytics.",
+      "expected_issue_type": "bug",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "bug-06",
+      "query": "The billing screen shows an error and will not open.",
+      "expected_issue_type": "bug",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "feature_request-01",
+      "query": "Please add support for scheduling data exports automatically.",
+      "expected_issue_type": "feature_request",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "feature_request-02",
+      "query": "We would like an option to customize the notification layout.",
+      "expected_issue_type": "feature_request",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "feature_request-03",
+      "query": "Could a future release include a mobile application?",
+      "expected_issue_type": "feature_request",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "feature_request-04",
+      "query": "Our team requests additional configuration options for API integrations.",
+      "expected_issue_type": "feature_request",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "feature_request-05",
+      "query": "It would be useful to add a dark theme to the dashboard.",
+      "expected_issue_type": "feature_request",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "feature_request-06",
+      "query": "Please implement a new export format for our reports.",
+      "expected_issue_type": "feature_request",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "how_to-01",
+      "query": "What steps should I follow to configure email notifications?",
+      "expected_issue_type": "how_to",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "how_to-02",
+      "query": "How do I download data from the analytics dashboard?",
+      "expected_issue_type": "how_to",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "how_to-03",
+      "query": "Please explain how to set up an API integration for my team.",
+      "expected_issue_type": "how_to",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "how_to-04",
+      "query": "Where can I change the billing settings for our workspace?",
+      "expected_issue_type": "how_to",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "how_to-05",
+      "query": "I need instructions for enabling two-factor authentication.",
+      "expected_issue_type": "how_to",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "how_to-06",
+      "query": "How can I export a report from the mobile app?",
+      "expected_issue_type": "how_to",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "other-01",
+      "query": "I have a general question about the service.",
+      "expected_issue_type": "other",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "other-02",
+      "query": "Please tell me who I should contact about my workspace.",
+      "expected_issue_type": "other",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "other-03",
+      "query": "I need assistance but do not know which department handles this.",
+      "expected_issue_type": "other",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "other-04",
+      "query": "I would like general information about my account.",
+      "expected_issue_type": "other",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "other-05",
+      "query": "Can someone from support review a general account question?",
+      "expected_issue_type": "other",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "other-06",
+      "query": "I am contacting support with a question unrelated to a specific fault.",
+      "expected_issue_type": "other",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "performance-01",
+      "query": "The analytics page takes thirty seconds to load.",
+      "expected_issue_type": "performance",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "performance-02",
+      "query": "API queries time out during normal use.",
+      "expected_issue_type": "performance",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "performance-03",
+      "query": "The application has become much slower over the last week.",
+      "expected_issue_type": "performance",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "performance-04",
+      "query": "Exporting data takes too long and sometimes times out.",
+      "expected_issue_type": "performance",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "performance-05",
+      "query": "Every page is sluggish even though my connection is fast.",
+      "expected_issue_type": "performance",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "performance-06",
+      "query": "The mobile app responds slowly when I switch between screens.",
+      "expected_issue_type": "performance",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "security_concern-01",
+      "query": "A login from an unfamiliar device appeared on my account.",
+      "expected_issue_type": "security_concern",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "security_concern-02",
+      "query": "We need information about encryption of stored customer data.",
+      "expected_issue_type": "security_concern",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "security_concern-03",
+      "query": "I found a potential vulnerability in the export functionality.",
+      "expected_issue_type": "security_concern",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "security_concern-04",
+      "query": "An unknown person appears to have accessed my workspace.",
+      "expected_issue_type": "security_concern",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "security_concern-05",
+      "query": "Please explain whether your service complies with our security requirements.",
+      "expected_issue_type": "security_concern",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "security_concern-06",
+      "query": "The notification endpoint may expose private account information.",
+      "expected_issue_type": "security_concern",
+      "source": "assistant_authored_exploratory",
+      "notes": "Intended label is an author judgement, not independently human-reviewed ground truth."
+    },
+    {
+      "id": "boundary-01",
+      "query": "",
+      "expected_issue_type": null,
+      "source": "assistant_authored_exploratory",
+      "notes": "Boundary case; should request more evidence, not count as a classification success."
+    },
+    {
+      "id": "boundary-02",
+      "query": "It does not work.",
+      "expected_issue_type": null,
+      "source": "assistant_authored_exploratory",
+      "notes": "Boundary case; should request more evidence, not count as a classification success."
+    },
+    {
+      "id": "boundary-03",
+      "query": "Help!",
+      "expected_issue_type": null,
+      "source": "assistant_authored_exploratory",
+      "notes": "Boundary case; should request more evidence, not count as a classification success."
+    },
+    {
+      "id": "boundary-04",
+      "query": "quasar nebula starlight",
+      "expected_issue_type": null,
+      "source": "assistant_authored_exploratory",
+      "notes": "Boundary case; should request more evidence, not count as a classification success."
+    },
+    {
+      "id": "boundary-05",
+      "query": "The quantum flux capacitor oscillates.",
+      "expected_issue_type": null,
+      "source": "assistant_authored_exploratory",
+      "notes": "Boundary case; should request more evidence, not count as a classification success."
+    },
+    {
+      "id": "boundary-06",
+      "query": "Something happened.",
+      "expected_issue_type": null,
+      "source": "assistant_authored_exploratory",
+      "notes": "Boundary case; should request more evidence, not count as a classification success."
+    }
+  ]
+}

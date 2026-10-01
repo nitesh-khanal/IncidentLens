@@ -32,3 +32,8 @@ data/processed/*
 !data/processed/models/logistic_regression.joblib
 !data/processed/models/decision_tree.joblib
 !data/processed/models/random_forest.joblib
+
+# Keep the presentation theme; other Streamlit settings remain local.
+!.streamlit/
+.streamlit/*
+!.streamlit/config.toml

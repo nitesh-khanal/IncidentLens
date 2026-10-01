@@ -2,7 +2,7 @@
 IncidentLens — model evaluation utilities.
 
 Computes standard classification metrics AND a template-holdout split,
-which is the more honest generalization measure for this specific
+which separates repeated descriptions for this specific
 dataset (see docs/ml_problem_definition.md — Stage 16 found only 96
 unique text templates mapping deterministically to labels).
 """
@@ -37,6 +37,9 @@ def cross_validate_model(model, X, y, cv=5) -> dict:
 
 def template_holdout_split(df, X, template_col="processed_message", test_frac=0.2, random_state=42):
     """
+    Legacy array-splitting helper: does not refit preprocessing. Use
+    src.validation.evaluate_split for train-only feature fitting.
+
     Split by UNIQUE TEMPLATE, not by row. All rows sharing a template go
     entirely into either train or test — never both. This measures
     whether a model can classify a template it has genuinely never seen,

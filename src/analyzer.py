@@ -83,8 +83,8 @@ class IncidentIntelligenceEngine:
             if matched_terms == 0:
                 note += (
                     " WARNING: none of this text's words appear in the "
-                    "training vocabulary (99 terms). This prediction is "
-                    "driven almost entirely by metadata defaults, not the "
+                    f"training vocabulary ({self.vectorizer.vocabulary_size()} terms). This prediction is "
+                    "driven almost entirely by supplied metadata or defaults, not the "
                     "incident text — treat it as unreliable."
                 )
             elif matched_terms <= 2:
@@ -96,13 +96,20 @@ class IncidentIntelligenceEngine:
                 )
             elif confidence is not None and confidence < 0.3:
                 note += (
-                    f" Low confidence ({confidence*100:.0f}%, vs. a "
+                    f" Low model score ({confidence*100:.0f}%, vs. a "
                     f"{100/len(self.classifier.classes_):.0f}% random "
-                    "baseline across 8 categories) — the text gave the "
+                    f"baseline across {len(self.classifier.classes_)} categories) — the text gave the "
                     "model little to distinguish this category from others."
                 )
 
+            # This is a conservative evidence gate, not calibrated certainty.
+            # Keep raw candidates for diagnostics, but do not endorse weak output.
+            supported = matched_terms >= 3 and confidence is not None and confidence >= 0.5
+            if not supported:
+                note += " Insufficient evidence: provide a more specific description. The candidate label is diagnostic only; the 3-term/0.5-score gate is a heuristic, not a calibrated guarantee."
             classification = {
+                "supported": supported,
+                "evidence_status": "candidate_supported" if supported else "insufficient_evidence",
                 "predicted_issue_type": predicted,
                 "metadata_provided": metadata_provided,
                 "matched_vocabulary_terms": matched_terms,
@@ -110,18 +117,20 @@ class IncidentIntelligenceEngine:
                 "note": note,
             }
 
-            cluster_id = int(self.clusterer.predict(tfidf_vec)[0])
-            cluster_info = {
-                "cluster_id": cluster_id,
-                "top_terms": self.cluster_top_terms.get(cluster_id, []),
-                "note": (
-                    "Unsupervised grouping by language similarity — NOT a "
-                    "claim about a shared root cause (see docs/clustering.md)."
-                ),
-            }
+            # A zero vector has no lexical evidence for any cluster.
+            if matched_terms > 0:
+                cluster_id = int(self.clusterer.predict(tfidf_vec)[0])
+                cluster_info = {
+                    "cluster_id": cluster_id,
+                    "top_terms": self.cluster_top_terms.get(cluster_id, []),
+                    "note": (
+                        "Unsupervised grouping by language similarity — NOT a "
+                        "claim about a shared root cause (see docs/clustering.md)."
+                    ),
+                }
 
         recurring = None
-        if classification:
+        if classification and classification["supported"]:
             same_type = self.metadata_df[
                 self.metadata_df["issue_type"] == classification["predicted_issue_type"]
             ]
@@ -132,7 +141,7 @@ class IncidentIntelligenceEngine:
                 "issue_type_frequency_pct": round(freq_pct, 2),
                 "historical_incident_count": int(len(same_type)),
                 "avg_resolution_time_hours": (
-                    round(float(avg_res_time), 2) if avg_res_time is not None else None
+                    round(float(avg_res_time), 2) if pd.notna(avg_res_time) else None
                 ),
                 "note": "Observed data from the historical dataset for the predicted category.",
             }
@@ -152,7 +161,11 @@ def format_intelligence_report(result: dict) -> str:
     lines += ["=" * 50, "CLASSIFICATION (model output)", "=" * 50]
     c = result["classification"]
     if c:
-        lines.append(f"Predicted issue type: {c['predicted_issue_type']}")
+        if c.get("supported", True):
+            lines.append(f"Suggested issue type: {c['predicted_issue_type']}")
+        else:
+            lines.append("Insufficient evidence for a category suggestion.")
+            lines.append(f"Diagnostic model candidate: {c['predicted_issue_type']}")
         lines.append(f"Note: {c['note']}")
     else:
         lines.append("No classification available (empty/unusable query text).")
@@ -184,7 +197,7 @@ def format_intelligence_report(result: dict) -> str:
     rp = result["recurring_patterns"]
     if rp:
         lines.append(f"This predicted category represents {rp['issue_type_frequency_pct']}% "
-                     f"of {rp['historical_incident_count']} historical incidents.")
+                     f"of the historical dataset ({rp['historical_incident_count']:,} incidents in this category).")
         if rp["avg_resolution_time_hours"] is not None:
             lines.append(f"Average historical resolution time: {rp['avg_resolution_time_hours']}h")
         else:
