@@ -64,9 +64,12 @@ class IncidentIntelligenceEngine:
             predicted = self.classifier.predict(X)[0]
 
             confidence = None
+            margin = 0.0
             if hasattr(self.classifier, "predict_proba"):
                 proba = self.classifier.predict_proba(X)[0]
                 confidence = float(proba.max())
+                ranked = sorted(proba)
+                margin = float(ranked[-1] - ranked[-2]) if len(ranked) > 1 else 0.0
 
             note = (
                 "Model output, not a confirmed category. Metadata was "
@@ -105,11 +108,24 @@ class IncidentIntelligenceEngine:
             # This is a conservative evidence gate, not calibrated certainty.
             # Keep raw candidates for diagnostics, but do not endorse weak output.
             supported = matched_terms >= 3 and confidence is not None and confidence >= 0.5
+            # A short phrase needs stronger model AND historical agreement.
+            # No added synonym can turn a one-term keyword into support here.
+            short_supported = (
+                matched_terms == 2 and confidence is not None and confidence >= 0.8
+                and margin >= 0.5 and bool(similar)
+                and similar[0]["issue_type"] == predicted
+                and similar[0].get("shared_terms", 0) >= 2
+                and similar[0]["similarity"] >= 0.6
+            )
+            supported = supported or short_supported
+            if short_supported:
+                note += " Tentative short-description suggestion: a high model score and a historical match agree. Add incident details before acting; this gate is heuristic, not calibrated certainty."
             if not supported:
-                note += " Insufficient evidence: provide a more specific description. The candidate label is diagnostic only; the 3-term/0.5-score gate is a heuristic, not a calibrated guarantee."
+                note += " Insufficient evidence: provide a more specific description. The candidate label is diagnostic only; the standard 3-term/0.5-score gate and stricter two-term agreement gate are heuristics, not calibrated guarantees."
             classification = {
                 "supported": supported,
-                "evidence_status": "candidate_supported" if supported else "insufficient_evidence",
+                "evidence_status": ("short_description_supported" if short_supported else
+                                    "candidate_supported" if supported else "insufficient_evidence"),
                 "predicted_issue_type": predicted,
                 "metadata_provided": metadata_provided,
                 "matched_vocabulary_terms": matched_terms,

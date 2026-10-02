@@ -17,6 +17,7 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
 from src.config import PROJECT_ROOT
+from src.synonyms import normalize_support_synonyms
 
 NLP_DATA_DIR = PROJECT_ROOT / "data" / "nltk"
 # Prefer the shipped resources over machine-specific NLTK caches.
@@ -74,6 +75,7 @@ def preprocess_text(
     working = str(text).lower() if lowercase else str(text)
     # Normalize equivalent authentication phrases before "in" is removed.
     working = re.sub(r"\b(?:log[\s-]+in|sign[\s-]+in|signin)\b", "login", working, flags=re.IGNORECASE)
+    working = normalize_support_synonyms(working)
     tokens = tokenize(working)
 
     if remove_punctuation:

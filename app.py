@@ -225,7 +225,7 @@ elif page == "🔎 Analyze New Incident":
             st.info("The draft has changed. Select Analyze Incident to update the results below.")
         summary = st.columns(3)
         category = result["classification"]
-        summary[0].metric("Suggested category", readable(category["predicted_issue_type"]) if category and category.get("supported", True) else "Insufficient evidence")
+        summary[0].metric("Tentative category" if category and category.get("evidence_status") == "short_description_supported" else "Suggested category", readable(category["predicted_issue_type"]) if category and category.get("supported", True) else "Insufficient evidence")
         summary[1].metric("Historical matches", len(result["similar_incidents"]))
         summary[2].metric("Matched vocabulary terms", category["matched_vocabulary_terms"] if category else 0)
 
@@ -233,7 +233,8 @@ elif page == "🔎 Analyze New Incident":
         st.subheader("Classification (model output)")
         if result["classification"]:
             if result["classification"].get("supported", True):
-                st.info(f"**Suggested issue type:** {readable(result['classification']['predicted_issue_type'])}")
+                label = "Tentative issue type" if result["classification"].get("evidence_status") == "short_description_supported" else "Suggested issue type"
+                st.info(f"**{label}:** {readable(result['classification']['predicted_issue_type'])}")
             else:
                 st.warning("Insufficient evidence to suggest an issue type. Add specific symptoms and ticket context; the labels below are diagnostic model candidates.")
             st.caption(result["classification"]["note"])
