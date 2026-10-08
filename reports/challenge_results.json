@@ -3,12 +3,12 @@
   "provenance": "Assistant-authored exploratory challenge set; not independent real-world validation.",
   "labelled_cases": 48,
   "boundary_cases": 6,
-  "raw_classifier_accuracy": 0.75,
+  "raw_classifier_accuracy": 0.7708333333333334,
   "coverage": 0.5208333333333334,
   "accepted_accuracy": 0.96,
   "boundary_abstentions": 6,
-  "retrieval_precision_at_1": 0.8125,
-  "retrieval_precision_at_5": 0.43333333333333335,
+  "retrieval_precision_at_1": 0.8333333333333334,
+  "retrieval_precision_at_5": 0.4375,
   "cases": [
     {
       "id": "account_access-01",
@@ -19,7 +19,7 @@
       "predicted": "account_access",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.9713705068409831,
+      "confidence": 0.9711016686525148,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -32,7 +32,7 @@
       "predicted": "account_access",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.9752031454429289,
+      "confidence": 0.9749068780380934,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -44,8 +44,8 @@
       "notes": "Intended label is an author judgement, not independently human-reviewed ground truth.",
       "predicted": "account_access",
       "accepted": true,
-      "matched_terms": 3,
-      "confidence": 0.7662607794786328,
+      "matched_terms": 4,
+      "confidence": 0.9411765747546469,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -58,7 +58,7 @@
       "predicted": "account_access",
       "accepted": true,
       "matched_terms": 5,
-      "confidence": 0.9921616577541651,
+      "confidence": 0.9921780211242954,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -71,7 +71,7 @@
       "predicted": "account_access",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.9551952389408298,
+      "confidence": 0.9550085488521017,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -84,7 +84,7 @@
       "predicted": "account_access",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.6723251364907684,
+      "confidence": 0.67082932073963,
       "precision_at_1": 1.0,
       "precision_at_5": 0.4
     },
@@ -97,7 +97,7 @@
       "predicted": "billing_problem",
       "accepted": true,
       "matched_terms": 2,
-      "confidence": 0.9968194782123581,
+      "confidence": 0.9966835161079297,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -110,7 +110,7 @@
       "predicted": "billing_problem",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.9925709051399001,
+      "confidence": 0.9922505051780511,
       "precision_at_1": 1.0,
       "precision_at_5": 0.4
     },
@@ -123,7 +123,7 @@
       "predicted": "billing_problem",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.9973829952453056,
+      "confidence": 0.9972690641059492,
       "precision_at_1": 1.0,
       "precision_at_5": 0.4
     },
@@ -136,7 +136,7 @@
       "predicted": "billing_problem",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.9964013203687737,
+      "confidence": 0.9962258063175077,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -149,7 +149,7 @@
       "predicted": "bug",
       "accepted": false,
       "matched_terms": 1,
-      "confidence": 0.5358385430513481,
+      "confidence": 0.5370153527209944,
       "precision_at_1": 0.0,
       "precision_at_5": 0.0
     },
@@ -162,7 +162,7 @@
       "predicted": "billing_problem",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.9976795187650406,
+      "confidence": 0.9975663044254226,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -175,7 +175,7 @@
       "predicted": "how_to",
       "accepted": false,
       "matched_terms": 1,
-      "confidence": 0.43571315198706884,
+      "confidence": 0.44784622636803145,
       "precision_at_1": 0.0,
       "precision_at_5": 0.0
     },
@@ -188,7 +188,7 @@
       "predicted": "bug",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.9500512627194075,
+      "confidence": 0.9504451102350465,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -201,7 +201,7 @@
       "predicted": "bug",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.9428868519321755,
+      "confidence": 0.9435850477481016,
       "precision_at_1": 1.0,
       "precision_at_5": 0.8
     },
@@ -214,7 +214,7 @@
       "predicted": "bug",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.9975080988739475,
+      "confidence": 0.9975484768408828,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -227,7 +227,7 @@
       "predicted": "bug",
       "accepted": true,
       "matched_terms": 5,
-      "confidence": 0.9734374171537284,
+      "confidence": 0.9734883132661528,
       "precision_at_1": 1.0,
       "precision_at_5": 0.8
     },
@@ -240,7 +240,7 @@
       "predicted": "bug",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.9862639373767575,
+      "confidence": 0.9863314037010742,
       "precision_at_1": 1.0,
       "precision_at_5": 0.8
     },
@@ -253,7 +253,7 @@
       "predicted": "feature_request",
       "accepted": true,
       "matched_terms": 5,
-      "confidence": 0.8483994069368004,
+      "confidence": 0.8521081072655498,
       "precision_at_1": 1.0,
       "precision_at_5": 0.4
     },
@@ -266,7 +266,7 @@
       "predicted": "feature_request",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.9971262606503452,
+      "confidence": 0.9972313973013196,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -278,8 +278,8 @@
       "notes": "Intended label is an author judgement, not independently human-reviewed ground truth.",
       "predicted": "bug",
       "accepted": false,
-      "matched_terms": 1,
-      "confidence": 0.44450574882490884,
+      "matched_terms": 2,
+      "confidence": 0.48842692886799877,
       "precision_at_1": 0.0,
       "precision_at_5": 0.4
     },
@@ -292,7 +292,7 @@
       "predicted": "feature_request",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.9385394984302153,
+      "confidence": 0.94051171450241,
       "precision_at_1": 1.0,
       "precision_at_5": 0.4
     },
@@ -305,7 +305,7 @@
       "predicted": "feature_request",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.9561855595700163,
+      "confidence": 0.957604480666322,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -318,7 +318,7 @@
       "predicted": "other",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.2313515454564315,
+      "confidence": 0.23879836978904148,
       "precision_at_1": 0.0,
       "precision_at_5": 0.0
     },
@@ -331,7 +331,7 @@
       "predicted": "bug",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.32331764619409964,
+      "confidence": 0.32200438750049526,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -344,7 +344,7 @@
       "predicted": "how_to",
       "accepted": false,
       "matched_terms": 3,
-      "confidence": 0.33412753223640496,
+      "confidence": 0.34040992279681687,
       "precision_at_1": 1.0,
       "precision_at_5": 0.4
     },
@@ -357,7 +357,7 @@
       "predicted": "how_to",
       "accepted": false,
       "matched_terms": 5,
-      "confidence": 0.2992589324146906,
+      "confidence": 0.3060281637435794,
       "precision_at_1": 1.0,
       "precision_at_5": 0.6
     },
@@ -370,7 +370,7 @@
       "predicted": "bug",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.9142055488383346,
+      "confidence": 0.9146683968498102,
       "precision_at_1": 1.0,
       "precision_at_5": 0.6
     },
@@ -383,7 +383,7 @@
       "predicted": "security_concern",
       "accepted": false,
       "matched_terms": 1,
-      "confidence": 0.5197554492455284,
+      "confidence": 0.5225422982890071,
       "precision_at_1": 1.0,
       "precision_at_5": 0.6
     },
@@ -396,7 +396,7 @@
       "predicted": "how_to",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.6150586767422187,
+      "confidence": 0.6220571035060071,
       "precision_at_1": 1.0,
       "precision_at_5": 0.4
     },
@@ -409,7 +409,7 @@
       "predicted": "other",
       "accepted": true,
       "matched_terms": 2,
-      "confidence": 0.9843392998279528,
+      "confidence": 0.9851111035915873,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -422,7 +422,7 @@
       "predicted": "other",
       "accepted": true,
       "matched_terms": 2,
-      "confidence": 0.8088732293315266,
+      "confidence": 0.8172648126033347,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -435,7 +435,7 @@
       "predicted": "security_concern",
       "accepted": false,
       "matched_terms": 1,
-      "confidence": 0.5221732726741485,
+      "confidence": 0.5261968910378559,
       "precision_at_1": 0.0,
       "precision_at_5": 0.0
     },
@@ -448,7 +448,7 @@
       "predicted": "other",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.5323246921149315,
+      "confidence": 0.5406224247955945,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -461,7 +461,7 @@
       "predicted": "other",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.8162299995666721,
+      "confidence": 0.8225015852344821,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -474,7 +474,7 @@
       "predicted": "feature_request",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.40449846243591087,
+      "confidence": 0.4135124422201877,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -487,7 +487,7 @@
       "predicted": "performance",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.9511846164366259,
+      "confidence": 0.9508310238848846,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -500,7 +500,7 @@
       "predicted": "performance",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.9752129408708624,
+      "confidence": 0.9748814132546345,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -513,7 +513,7 @@
       "predicted": "performance",
       "accepted": false,
       "matched_terms": 1,
-      "confidence": 0.7181679592290474,
+      "confidence": 0.7188677170916606,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -526,7 +526,7 @@
       "predicted": "performance",
       "accepted": true,
       "matched_terms": 4,
-      "confidence": 0.9719420493462217,
+      "confidence": 0.9717772066355824,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -539,7 +539,7 @@
       "predicted": "performance",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.8222704285045742,
+      "confidence": 0.8219331670739739,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -549,12 +549,12 @@
       "expected_issue_type": "performance",
       "source": "assistant_authored_exploratory",
       "notes": "Intended label is an author judgement, not independently human-reviewed ground truth.",
-      "predicted": "bug",
+      "predicted": "performance",
       "accepted": false,
-      "matched_terms": 2,
-      "confidence": 0.5928333475451761,
-      "precision_at_1": 0.0,
-      "precision_at_5": 0.0
+      "matched_terms": 3,
+      "confidence": 0.4454038774175701,
+      "precision_at_1": 1.0,
+      "precision_at_5": 0.2
     },
     {
       "id": "security_concern-01",
@@ -565,7 +565,7 @@
       "predicted": "security_concern",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.5159182812403188,
+      "confidence": 0.5213883057164899,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -578,7 +578,7 @@
       "predicted": "security_concern",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.9752412055140816,
+      "confidence": 0.9757680327263251,
       "precision_at_1": 1.0,
       "precision_at_5": 0.2
     },
@@ -591,7 +591,7 @@
       "predicted": "security_concern",
       "accepted": true,
       "matched_terms": 3,
-      "confidence": 0.9938726605180738,
+      "confidence": 0.9940482015475599,
       "precision_at_1": 1.0,
       "precision_at_5": 1.0
     },
@@ -604,7 +604,7 @@
       "predicted": "other",
       "accepted": false,
       "matched_terms": 1,
-      "confidence": 0.4243020861145433,
+      "confidence": 0.4378620749750333,
       "precision_at_1": 0.0,
       "precision_at_5": 0.0
     },
@@ -617,7 +617,7 @@
       "predicted": "billing_problem",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.495846860841932,
+      "confidence": 0.48494168728403475,
       "precision_at_1": 0.0,
       "precision_at_5": 0.0
     },
@@ -630,7 +630,7 @@
       "predicted": "security_concern",
       "accepted": false,
       "matched_terms": 2,
-      "confidence": 0.46739207500079083,
+      "confidence": 0.47341430087106207,
       "precision_at_1": 0.0,
       "precision_at_5": 0.2
     },
@@ -656,7 +656,7 @@
       "predicted": "how_to",
       "accepted": false,
       "matched_terms": 0,
-      "confidence": 0.30314743619762735,
+      "confidence": 0.3062922476907428,
       "precision_at_1": null,
       "precision_at_5": null
     },
@@ -669,7 +669,7 @@
       "predicted": "how_to",
       "accepted": false,
       "matched_terms": 1,
-      "confidence": 0.8775507106662264,
+      "confidence": 0.87651266861468,
       "precision_at_1": null,
       "precision_at_5": null
     },
@@ -682,7 +682,7 @@
       "predicted": "other",
       "accepted": false,
       "matched_terms": 0,
-      "confidence": 0.21938003953076535,
+      "confidence": 0.22531758000958915,
       "precision_at_1": null,
       "precision_at_5": null
     },
@@ -695,7 +695,7 @@
       "predicted": "bug",
       "accepted": false,
       "matched_terms": 0,
-      "confidence": 0.18480710345645254,
+      "confidence": 0.18427666657169245,
       "precision_at_1": null,
       "precision_at_5": null
     },
@@ -708,7 +708,7 @@
       "predicted": "other",
       "accepted": false,
       "matched_terms": 1,
-      "confidence": 0.9450912408173114,
+      "confidence": 0.9466492078682474,
       "precision_at_1": null,
       "precision_at_5": null
     }
